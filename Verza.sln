@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{76E2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{205B9480-A89E-4A96-BE8F-4973FC13FEDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{A980552F-09C8-4C80-A1A7-5A850D4CB583}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{205B9480-A89E-4A96-BE8F-4973FC13FEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{205B9480-A89E-4A96-BE8F-4973FC13FEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{205B9480-A89E-4A96-BE8F-4973FC13FEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A980552F-09C8-4C80-A1A7-5A850D4CB583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A980552F-09C8-4C80-A1A7-5A850D4CB583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A980552F-09C8-4C80-A1A7-5A850D4CB583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A980552F-09C8-4C80-A1A7-5A850D4CB583}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
