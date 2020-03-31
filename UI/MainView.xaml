@@ -5,8 +5,144 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="社内伝票 OCR読み取り～AS転送入力" Height="800" Width="800" MinHeight="800" MinWidth="800">
+    <Window.Resources>
+        <Style TargetType="local:MainView">
+            <Setter Property="FontFamily" Value="Meiryo UI"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFDAFFCC"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" Name="gridImageColumn"  />
+            <ColumnDefinition Width="0.0" Name="gridManipulationColumn"/>
+            <ColumnDefinition Width="240"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--OCR Image-->
+        <Grid>
+            <Border Background="AliceBlue" Padding="10">
+                <Image Name="image" Source="{ Binding ImageSource }"/>
+            </Border>
+            <Viewbox x:Name="viewboxScrapingRects">
+                <Image x:Name="scrapingRects" Source="{Binding ScrapingRects }" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Viewbox>
+        </Grid>
+
+        <!--AS転送-->
+        <Grid Grid.Column="1">
+            <Border Background="DarkSeaGreen">
+                <Label Content="AS入力" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+
+        <!--Control Panel-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1">
+                <Label Content="{ Binding Message, Mode=OneWay }" Background="Beige" Height="25"/>
+                <Label Content="1. TIFF イメージを指定する"/>
+                <Button Content="ファイルを選択" Command="{Binding PickUpFilesCommand}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="戻る" Command="{ Binding PreviousImageCommand }"/>
+                    <Button Grid.Column="1" Content="次へ" Command="{ Binding NextImageCommand }"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="左90度回転" Command="{Binding RotateLeftCommond}"/>
+                    <Button Grid.Column="1" Content="右90度回転" Command="{Binding RotateRightCommond}"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="削除" Command="{Binding DeleteFileCommand}"/>
+                    <Button Grid.Column="1" Content="" Visibility="Hidden"/>
+                </Grid>
+
+
+                <Label Content="2. イメージを読み取る"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="OCR言語"/>
+                    <ComboBox Name="comboBoxAvailableLanguages" Grid.Column="1"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="テンプレート"/>
+                    <ComboBox Grid.Column="1" SelectedIndex="0"
+                              SelectedItem="{Binding TemplateName, Mode=TwoWay}" 
+                              ItemsSource="{Binding TemplateNameList}"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="OCR調整"/>
+                    <ComboBox Name="comboBoxOcrParam" Grid.Column="1" SelectedValue="{ Binding OcrParam, Mode=TwoWay }"/>
+
+                </Grid>
+                <Button Content="読み取り"/>
+                <Button Content="一括読み取り"/>
+
+                <Label Content="3. ASへ入力"/>
+                <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
+                <Button Name="buttonGridChange" Content="入力画面を開く"/>
+
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="クリア" Command="{Binding ClearFilesCommand}"/>
+                <!--<Button Name="buttonClose" Grid.Column="1" Content="閉じる" Click="buttonClose_Click"/>-->
+                <Button Name="buttonClose" Grid.Column="1" Content="閉じる"/>
+            </Grid>
+        </Grid>
+
     </Grid>
 </Window>
