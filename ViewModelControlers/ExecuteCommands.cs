@@ -17,7 +17,7 @@ namespace ViewModelControlers
 
             if (list.Count == 0) return;
 
-            // 作業ディレクトリ
+            // Use work directory ,not to change original files
             if (Directory.Exists(workDirectory))
             {
                 Directory.Delete(workDirectory, true);
@@ -27,6 +27,7 @@ namespace ViewModelControlers
             imageLoader.DivideMultiTiffImageAndCopyToWorkDirectory(list, workDirectory);
 
             Items.Clear();
+
             DirectoryInfo di = new DirectoryInfo(workDirectory);
             var files = di.GetFiles();
             foreach (var file in files)
