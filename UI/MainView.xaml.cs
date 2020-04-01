@@ -25,6 +25,8 @@ namespace UI
         {
             InitializeComponent();
             this.mainVewModel = mainViewModel;
+
+            this.DataContext = mainViewModel;
         }
 
         private IControler mainVewModel;

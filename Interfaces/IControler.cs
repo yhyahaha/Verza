@@ -16,12 +16,12 @@ namespace Interfaces
         /// <summary>
         /// 取得したファイル・リストをクリアする
         /// </summary>
-        IDelegateCommand ClearFileListCommand { get; }
+        //IDelegateCommand ClearFileListCommand { get; }
 
         /// <summary>
         /// 選択されているファイルをファイル・リストから削除する
         /// </summary>
-        IDelegateCommand DeleteFileCommand { get; }
+        //IDelegateCommand DeleteFileCommand { get; }
 
     }
 }

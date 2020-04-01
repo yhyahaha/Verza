@@ -12,8 +12,23 @@ namespace ViewModelControlers
 {
     public partial class MainViewModel : IControler
     {
+        
         public ObservableCollection<ImageFileWithOcrResults> Items { get; private set; }
             = new ObservableCollection<ImageFileWithOcrResults>();
+
+        public MainViewModel()
+        {
+            this.workDirectory = "WORK";
+        }
+
+        public string Message
+        {
+            get { return message; }
+            set
+            {
+                this.message = value;
+            }
+        }
 
         public IDelegateCommand PickUpFilesCommand
         {
@@ -27,12 +42,14 @@ namespace ViewModelControlers
             }
         }
 
-        public IDelegateCommand ClearFileListCommand => throw new NotImplementedException();
+        //public IDelegateCommand ClearFileListCommand => throw new NotImplementedException();
 
-        public IDelegateCommand DeleteFileCommand => throw new NotImplementedException();
+        //public IDelegateCommand DeleteFileCommand => throw new NotImplementedException();
 
 
         // Fields
+        private string workDirectory;
+        private string message;
         private IDelegateCommand pickUpFilesCommand;
     }
 }
