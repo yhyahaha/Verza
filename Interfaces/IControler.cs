@@ -16,6 +16,8 @@ namespace Interfaces
 
         double ImageAngle { get; }
 
+        BitmapSource ScrapingRectsImage { get; }
+
         double OcrParam { get; set; }
 
         List<double> OcrParamList { get; }

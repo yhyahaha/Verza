@@ -10,7 +10,7 @@ using System.IO;
 
 namespace ViewModelControlers
 {
-    class ScrapingRectLoader
+    class OcrTemplateLoader
     {
         int deviceDpi;
 
@@ -18,24 +18,22 @@ namespace ViewModelControlers
         /// デバイスのDpiを指定して初期化
         /// </summary>
         /// <param name="deviceDpi"></param>
-        public ScrapingRectLoader(int deviceDpi)
+        public OcrTemplateLoader(int deviceDpi)
         {
             if (deviceDpi < 1)
             {
-                throw new InvalidOperationException(errMsgDpiIsInvalid);
+                throw new InvalidOperationException(errMsgDeviceDpiInvalid);
             }
             this.deviceDpi = deviceDpi;
         }
 
-
-
         public RenderTargetBitmap GetImageFromTemplate(string templateName)
         {
-            string templatePath = Path.Combine("Template", templateName);
+            string templatePath = Path.Combine("Templates", templateName);
             FileInfo fileInfo = new FileInfo(templatePath);
             if (!fileInfo.Exists)
             {
-                throw new InvalidOperationException(errMsgFileIsNotExist);
+                return null;
             }
 
             RenderTargetBitmap bmp;
@@ -45,11 +43,12 @@ namespace ViewModelControlers
                 string header = reader.ReadLine();
                 string[] token = header.Split(',');
 
-                int pixelWidth = int.Parse(token[0]);
-                int pixelHeight = int.Parse(token[1]);
-                int documentDpi = int.Parse(token[2]);
-                double adjustX = double.Parse(token[3]);
-                double adjustY = double.Parse(token[4]);
+                string documentType = token[0];
+                int pixelWidth = int.Parse(token[1]);
+                int pixelHeight = int.Parse(token[2]);
+                int documentDpi = int.Parse(token[3]);
+                double adjustX = double.Parse(token[4]);
+                double adjustY = double.Parse(token[5]);
 
                 bmp = new RenderTargetBitmap(pixelWidth, pixelHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32);
 
@@ -81,8 +80,6 @@ namespace ViewModelControlers
             return bmp;
         }
 
-        private string errMsgDpiIsInvalid= "指定のDeviceDpiが無効です。";
-        private string errMsgFileIsNotExist = "指定のファイルが見つかりません。";
-
+        private string errMsgDeviceDpiInvalid= "指定のDeviceDpiが無効です。";
     }
 }

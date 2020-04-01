@@ -51,7 +51,7 @@ namespace ViewModelControlers
         {
             if (imageIndex < (Items.Count - 1))
             {
-                ClearImage();
+                ClearImages();
                 imageIndex++;
                 ShowImageWithScrapingRects();
             }
@@ -63,7 +63,7 @@ namespace ViewModelControlers
         {
             if (0 < imageIndex)
             {
-                ClearImage();
+                ClearImages();
                 imageIndex--;
                 ShowImageWithScrapingRects();
             }
@@ -82,7 +82,7 @@ namespace ViewModelControlers
 
         private void RotateImage(double angle)
         {
-            ClearImage();
+            ClearImages();
 
             string path = Items[imageIndex].FilePath;
             TiffImageLoader loader = new TiffImageLoader();
@@ -124,32 +124,24 @@ namespace ViewModelControlers
         private void ExecuteFilesClearCommand()
         {
             Items.Clear();
-            ImageSource = null;
-            imageIndex = -1;
+            ClearImages();
             SetButtonsEnabled();
-
+            imageIndex = -1;
             Message = msgReset;
         }
 
         private void ShowImageWithScrapingRects()
         {
-            double ocrParam = 0.6;
-            
             // ImageSource
             TiffImageLoader imageLoader = new TiffImageLoader();
-            this.ImageSource = imageLoader.CreateBitmapSourceFromPath(Items[imageIndex].FilePath, ocrParam);
+            this.ImageSource = imageLoader.CreateBitmapSourceFromPath(Items[imageIndex].FilePath, this.ocrParam);
 
-            //// OCR結果をもとにUIの画像を回転
+            // OCR結果をもとにUIの画像を回転
             this.ImageAngle = Items[imageIndex].OcrAngle * -1;
 
-            //// ScrapingRectsImage
-            //if (!OcrItems[imageIndex].ScrapingRects.Any())
-            //{
-            //    OcrItems[imageIndex].ReadTemplate("社内スタッフ撮照");
-            //}
-
-            //int deviceDpi = 97;
-            //this.ScrapingRects = OcrItems[imageIndex].GetScrapingRectsImage(deviceDpi);
+            // ScrapingRectsImage
+            var tempLoader = new OcrTemplateLoader(this.deviceDpi);
+            ScrapingRectsImage = tempLoader.GetImageFromTemplate(this.ocrTemplate);
 
             // BoundingRect
             //if (engine.OcrResults.Count > 0)
@@ -174,9 +166,11 @@ namespace ViewModelControlers
             SetButtonsEnabled();
             Message = $"{imageIndex + 1} / { Items.Count}";
         }
-        private void ClearImage()
+
+        private void ClearImages()
         {
             ImageSource = null;
+            ScrapingRectsImage = null;
             //BoundingRects = null;
             //engine.ClearResults();
         }

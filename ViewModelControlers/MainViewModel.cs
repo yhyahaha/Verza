@@ -21,6 +21,7 @@ namespace ViewModelControlers
 
         public MainViewModel()
         {
+            this.deviceDpi = 97;
             this.workDirectory = "WORK";
             imageIndex = -1;
             SetComboBoxOcrParam();
@@ -78,6 +79,16 @@ namespace ViewModelControlers
             {
                 if (value == this.imageAngle) return;
                 this.imageAngle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public BitmapSource ScrapingRectsImage
+        {
+            get { return this.scrapingRectsImage; }
+            set
+            {
+                this.scrapingRectsImage = value;
                 OnPropertyChanged();
             }
         }
@@ -219,11 +230,13 @@ namespace ViewModelControlers
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         // Fields
+        private readonly int deviceDpi;
         private int imageIndex;
         private readonly string workDirectory;
         private string message;
         private BitmapSource imageSource;
         private double imageAngle;
+        private BitmapSource scrapingRectsImage;
         private double ocrParam;
         private List<double> ocrParamList;
         private string ocrTemplate;

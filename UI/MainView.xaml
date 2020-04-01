@@ -51,7 +51,7 @@
                 </Image>
             </Border>
             <Viewbox x:Name="viewboxScrapingRects">
-                <Image x:Name="scrapingRects" Source="{Binding ScrapingRects }" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Image x:Name="scrapingRects" Source="{Binding ScrapingRectsImage }"/>
             </Viewbox>
         </Grid>
 
