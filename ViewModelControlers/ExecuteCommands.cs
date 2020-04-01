@@ -70,8 +70,6 @@ namespace ViewModelControlers
 
         private bool CanExecutePreviousImageCommand() => (0 < Items.Count && 0 < imageIndex);
 
-        // RotateRightCommond RotateLeftCommond
-        // 元の画像を回転して上書き保存 
         private void ExecuteRotateRightCommond()
         {
             RotateImage(90.0);
@@ -122,21 +120,26 @@ namespace ViewModelControlers
 
         private bool CanExecuteDeleteFileCommand() => Items.Count != 0 && ImageSource != null;
 
+        private void ExecuteFilesClearCommand()
+        {
+            Items.Clear();
+            ImageSource = null;
+            imageIndex = -1;
+            SetButtonsEnabled();
 
-
-
+            Message = msgReset;
+        }
 
         private void ShowImageWithScrapingRects()
         {
             double ocrParam = 0.6;
-            
             
             // ImageSource
             TiffImageLoader imageLoader = new TiffImageLoader();
             this.ImageSource = imageLoader.CreateBitmapSourceFromPath(Items[imageIndex].FilePath, ocrParam);
 
             //// OCR結果をもとにUIの画像を回転
-            //this.ImageAngle = OcrItems[imageIndex].OcrAngle * -1;
+            this.ImageAngle = Items[imageIndex].OcrAngle * -1;
 
             //// ScrapingRectsImage
             //if (!OcrItems[imageIndex].ScrapingRects.Any())
@@ -188,5 +191,10 @@ namespace ViewModelControlers
             //goOcrCommand?.RaiseCanExecuteChanged();
 
         }
+
+        // Message
+        string errMsgNotAvailableLanguage = "指定の言語は利用できません";
+        string msgReset = "クリアしました。";
+
     }
 }

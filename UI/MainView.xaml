@@ -42,7 +42,13 @@
         <!--OCR Image-->
         <Grid>
             <Border Background="AliceBlue" Padding="10">
-                <Image Name="image" Source="{ Binding ImageSource }"/>
+                <Image Name="image" 
+                       Source="{ Binding ImageSource }" 
+                       RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <RotateTransform Angle="{Binding ImageAngle}"/>
+                    </Image.RenderTransform>
+                </Image>
             </Border>
             <Viewbox x:Name="viewboxScrapingRects">
                 <Image x:Name="scrapingRects" Source="{Binding ScrapingRects }" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -138,7 +144,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="クリア" Command="{Binding ClearFilesCommand}"/>
+                <Button Grid.Column="0" Content="クリア" Command="{Binding ClearFileListCommand}"/>
                 <Button Name="buttonClose" Grid.Column="1" Content="閉じる" Click="buttonClose_Click"/>
             </Grid>
         </Grid>

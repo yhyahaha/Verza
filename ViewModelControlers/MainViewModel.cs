@@ -47,7 +47,18 @@ namespace ViewModelControlers
             }
         }
 
-        
+        private double imageAngle;
+        public double ImageAngle
+        {
+            get { return imageAngle; }
+            private set
+            {
+                imageAngle = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         // DelegateCommands
 
@@ -124,15 +135,15 @@ namespace ViewModelControlers
             }
         }
 
-        public IDelegateCommand ClearFilesCommand
+        public IDelegateCommand ClearFileListCommand
         {
             get
             {
-                if (clearFilesCommand == null)
+                if (clearFileListCommand == null)
                 {
-                    //clearFilesCommand = new DelegateCommand(ExecuteFilesClearCommand);
+                    clearFileListCommand = new DelegateCommand(ExecuteFilesClearCommand);
                 }
-                return clearFilesCommand;
+                return clearFileListCommand;
             }
         }
 
@@ -164,7 +175,7 @@ namespace ViewModelControlers
         private IDelegateCommand goOcrCommand;
         private IDelegateCommand rotateRightCommond;
         private IDelegateCommand rotateLeftCommond;
-        private IDelegateCommand clearFilesCommand;
+        private IDelegateCommand clearFileListCommand;
         private IDelegateCommand deleteFileCommand;
     }
 }

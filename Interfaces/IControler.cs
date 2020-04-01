@@ -8,9 +8,6 @@ namespace Interfaces
 {
     public interface IControler
     {
-        /// <summary>
-        /// FilePickerを使ってFileを取得する
-        /// </summary>
         IDelegateCommand PickUpFilesCommand { get; }
 
         IDelegateCommand NextImageCommand { get; }
@@ -23,7 +20,7 @@ namespace Interfaces
 
         IDelegateCommand RotateLeftCommond { get; }
 
-        //IDelegateCommand ClearFileListCommand { get; }
+        IDelegateCommand ClearFileListCommand { get; }
 
         IDelegateCommand DeleteFileCommand { get; }
     }
