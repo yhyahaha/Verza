@@ -5,3 +5,6 @@ dotnet_diagnostic.CA1030.severity = silent
 
 # CA1305: IFormatProvider を指定します
 dotnet_diagnostic.CA1305.severity = silent
+
+# CA1815: equals および operator equals を値型でオーバーライドします
+dotnet_diagnostic.CA1815.severity = silent

@@ -11,7 +11,7 @@ namespace ViewModelControlers
 {
     class TiffImageLoader 
     {
-        public IList<string> GetFiles()
+        public IList<string> GetFilesWithPicker()
         {
             var list = new List<string>();
 
@@ -33,7 +33,7 @@ namespace ViewModelControlers
             return list;
         }
 
-        public void CopyDividedFileToWorkDirectory(IList<string> files, string directoryPath)
+        public void DivideMultiTiffImageAndCopyToWorkDirectory(IList<string> files, string directoryPath)
         {
             int index = 0;
 
