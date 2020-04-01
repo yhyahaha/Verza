@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    interface IOcrItem
+    public interface IOcrResult
     {
         /// <summary>
         /// ImageFileのパス
@@ -21,7 +21,9 @@ namespace Interfaces
         /// <summary>
         /// バウンディングボックス
         /// </summary>
-        IList<ScrapingRect> ScrapingRects { get; set; }
+        IList<ScrapingRect> ScrapingRects { get; }
+
+        
 
         //public void ReadTemplate(string templateName)
 
