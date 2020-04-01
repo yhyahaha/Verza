@@ -18,6 +18,10 @@ namespace Interfaces
 
         BitmapSource ScrapingRectsImage { get; }
 
+        IList<string> AvailableLanguages { get; }
+
+        string OcrLanguage { get; set; }
+
         double OcrParam { get; set; }
 
         List<double> OcrParamList { get; }

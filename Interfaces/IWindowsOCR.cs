@@ -9,7 +9,7 @@ namespace Interfaces
         /// <summary>
         /// OCRの実行言語
         /// </summary>
-        string OcrLanguageTag { get; }
+        string OcrLanguage { get; }
 
         /// <summary>
         /// OCRの実行が可能か
@@ -38,10 +38,10 @@ namespace Interfaces
         void SetOcrLanguage(string languageTag);
 
         /// <summary>
-        /// OCRエンジンに指定可能な言語のTagリスト
+        /// OCRエンジンに指定可能な言語リスト
         /// </summary>
         /// <returns></returns>
-        IList<string> GetAvailableLanguageTags();
+        IList<string> GetAvailableLanguages();
 
         /// <summary>
         /// OCR実行

@@ -31,12 +31,13 @@ namespace UwpOcrForWpfLibrary
             ocrResults = new List<WinOcrResult>();
         }
 
-        public string OcrLanguageTag
+        public string OcrLanguage
         {
             get
             {
                 if (ocrLanguage == null) return string.Empty;
-                return ocrLanguage.LanguageTag;
+                OcrLanguages langus = new OcrLanguages();
+                return langus.GetLanguage(ocrLanguage.LanguageTag);
             }
         }
 
@@ -56,9 +57,12 @@ namespace UwpOcrForWpfLibrary
 
         public bool CanExecute => engine != null && this.ocrLanguage != null;
 
-        public void SetOcrLanguage(string languageTag)
+        public void SetOcrLanguage(string language)
         {
-            ocrLanguage = new UwpLanguage(languageTag);
+            OcrLanguages langus = new OcrLanguages();
+            string tag = langus.GetTag(language);
+            
+            ocrLanguage = new UwpLanguage(tag);
             engine = UwpOcrEngine.TryCreateFromLanguage(ocrLanguage);
 
             if (engine == null)
@@ -68,13 +72,19 @@ namespace UwpOcrForWpfLibrary
             }
         }
 
-        public IList<string> GetAvailableLanguageTags()
+        public IList<string> GetAvailableLanguages()
         {
+            OcrLanguages langus = new OcrLanguages();
+            
             IList<string> languages = new List<string>();
             var list = UwpOcrEngine.AvailableRecognizerLanguages;
             if(list.Count != 0)
             {
-                foreach(var item in list) { languages.Add(item.LanguageTag); }
+                foreach(var item in list)
+                {
+                    var lang = langus.GetLanguage(item.LanguageTag);
+                    languages.Add(lang); 
+                }
             }
             return languages;
         }

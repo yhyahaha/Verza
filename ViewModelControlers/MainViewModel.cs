@@ -28,6 +28,7 @@ namespace ViewModelControlers
             SetComboBoxOcrTemplats();
 
             this.ocrEngine = engine;
+            OcrLanguage = this.ocrEngine?.OcrLanguage;
         }
 
         // Initializer
@@ -93,6 +94,23 @@ namespace ViewModelControlers
                 this.scrapingRectsImage = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string OcrLanguage
+        {
+            get { return ocrLanguage; }
+            set
+            {
+                if (value == ocrLanguage) return;
+                this.ocrLanguage = value;
+                this.ocrEngine.SetOcrLanguage(this.ocrLanguage);
+                OnPropertyChanged();
+            }
+        }
+
+        public IList<string> AvailableLanguages
+        {
+            get { return ocrEngine.GetAvailableLanguages(); }
         }
 
         public double OcrParam
@@ -239,6 +257,8 @@ namespace ViewModelControlers
         private BitmapSource imageSource;
         private double imageAngle;
         private BitmapSource scrapingRectsImage;
+        private string ocrLanguage;
+        private List<string> availableLanguages;
         private double ocrParam;
         private List<double> ocrParamList;
         private string ocrTemplate;
@@ -253,5 +273,24 @@ namespace ViewModelControlers
         private IDelegateCommand deleteFileCommand;
 
         private IWindowsOCR ocrEngine;
+
+
+        private IDelegateCommand testMethod;
+        public IDelegateCommand TestCommand
+        {
+            get
+            {
+                if (testMethod == null)
+                {
+                    testMethod = new DelegateCommand(TestMethod);
+                }
+                return testMethod;
+            }
+        }
+
+        public void TestMethod()
+        {
+            Console.WriteLine(ocrEngine.OcrLanguage);
+        }
     }
 }

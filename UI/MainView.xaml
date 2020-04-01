@@ -95,7 +95,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="削除" Command="{Binding DeleteFileCommand}"/>
-                    <Button Grid.Column="1" Content="" Visibility="Hidden"/>
+                    <Button Grid.Column="1" Content="test" Command="{Binding TestCommand}"/>
                 </Grid>
 
 
@@ -107,7 +107,9 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="OCR言語"/>
-                    <ComboBox Name="comboBoxAvailableLanguages" Grid.Column="1"/>
+                    <ComboBox Grid.Column="1"
+                              SelectedItem="{Binding OcrLanguage, Mode=TwoWay}"
+                              ItemsSource="{Binding AvailableLanguages, Mode=OneTime}"/>
                 </Grid>
 
                 <Grid>
@@ -139,7 +141,6 @@
                 <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
 
-                <Image Source="pack://siteoforigin:,,,/Templates/Beatles.jpg"/>
 
             </StackPanel>
 
