@@ -46,9 +46,147 @@ namespace ViewModelControlers
             return (Items.Count == 0);
         }
 
+        private void ExecuteNextImageCommand()
+        {
+            if (imageIndex < (Items.Count - 1))
+            {
+                ClearImage();
+                imageIndex++;
+                ShowImageWithScrapingRects();
+            }
+        }
+
+        private bool CanExecuteNextImageCommand() => (0 < Items.Count && imageIndex < (Items.Count - 1));
+
+        private void ExecutePreviousImageCommand()
+        {
+            if (0 < imageIndex)
+            {
+                ClearImage();
+                imageIndex--;
+                ShowImageWithScrapingRects();
+            }
+        }
+
+        private bool CanExecutePreviousImageCommand() => (0 < Items.Count && 0 < imageIndex);
+
+        // RotateRightCommond RotateLeftCommond
+        // 元の画像を回転して上書き保存 
+        private void ExecuteRotateRightCommond()
+        {
+            RotateImage(90.0);
+        }
+        private void ExecuteRotateLeftCommond()
+        {
+            RotateImage(-90.0);
+        }
+
+        private void RotateImage(double angle)
+        {
+            ClearImage();
+
+            string path = Items[imageIndex].FilePath;
+            TiffImageLoader loader = new TiffImageLoader();
+            loader.RotateTiffImage(path, angle);
+
+            ShowImageWithScrapingRects();
+        }
+
+        private bool CanExecuteRotateCommand() => (ImageSource != null);
+
+        private void ExecuteDeleteFileCommand()
+        {
+            this.ImageSource = null;
+            FileInfo fileInfo = new FileInfo(Items[imageIndex].FilePath);
+            fileInfo.Delete();
+            Items.RemoveAt(imageIndex);
+
+            if (!(imageIndex < Items.Count))
+            {
+                imageIndex = Items.Count - 1;
+            }
+
+            if (Items.Count > 0)
+            {
+                ShowImageWithScrapingRects();
+            }
+            else
+            {
+                ImageSource = null;
+                imageIndex = -1;
+                Message = "";
+            }
+
+            SetButtonsEnabled();
+        }
+
+        private bool CanExecuteDeleteFileCommand() => Items.Count != 0 && ImageSource != null;
+
+
+
+
+
+        private void ShowImageWithScrapingRects()
+        {
+            double ocrParam = 0.6;
+            
+            
+            // ImageSource
+            TiffImageLoader imageLoader = new TiffImageLoader();
+            this.ImageSource = imageLoader.CreateBitmapSourceFromPath(Items[imageIndex].FilePath, ocrParam);
+
+            //// OCR結果をもとにUIの画像を回転
+            //this.ImageAngle = OcrItems[imageIndex].OcrAngle * -1;
+
+            //// ScrapingRectsImage
+            //if (!OcrItems[imageIndex].ScrapingRects.Any())
+            //{
+            //    OcrItems[imageIndex].ReadTemplate("社内スタッフ撮照");
+            //}
+
+            //int deviceDpi = 97;
+            //this.ScrapingRects = OcrItems[imageIndex].GetScrapingRectsImage(deviceDpi);
+
+            // BoundingRect
+            //if (engine.OcrResults.Count > 0)
+            //{
+            //    BitmapFrame bitmapFrame = BitmapFrame.Create(ImageSource);
+
+            //    // UIの OverlayViewBox に BoundingRect を描画した WritableBitmap を提供
+            //    int width = bitmapFrame.PixelWidth;
+            //    int height = bitmapFrame.PixelHeight;
+            //    double dpiX = bitmapFrame.DpiX;
+            //    double dpiY = bitmapFrame.DpiY;
+
+            //    WriteableBitmap resultRects =
+            //        new WriteableBitmap(width, height, dpiX, dpiY, PixelFormats.Pbgra32, null);
+
+            //    DrawBoundingBoxs(ref resultRects);
+            //    resultRects.Freeze();
+
+            //    BoundingRects = resultRects;
+            //}
+
+            SetButtonsEnabled();
+            Message = $"{imageIndex + 1} / { Items.Count}";
+        }
+        private void ClearImage()
+        {
+            ImageSource = null;
+            //BoundingRects = null;
+            //engine.ClearResults();
+        }
+
         private void SetButtonsEnabled()
         {
             PickUpFilesCommand?.RaiseCanExecuteChanged();
+            NextImageCommand?.RaiseCanExecuteChanged();
+            PreviousImageCommand?.RaiseCanExecuteChanged();
+            RotateLeftCommond?.RaiseCanExecuteChanged();
+            RotateRightCommond?.RaiseCanExecuteChanged();
+            DeleteFileCommand?.RaiseCanExecuteChanged();
+            //goOcrCommand?.RaiseCanExecuteChanged();
+
         }
     }
 }

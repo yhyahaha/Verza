@@ -13,15 +13,18 @@ namespace Interfaces
         /// </summary>
         IDelegateCommand PickUpFilesCommand { get; }
 
-        /// <summary>
-        /// 取得したファイル・リストをクリアする
-        /// </summary>
+        IDelegateCommand NextImageCommand { get; }
+
+        IDelegateCommand PreviousImageCommand { get; }
+
+        IDelegateCommand GoOcrCommand { get; }
+
+        IDelegateCommand RotateRightCommond { get; }
+
+        IDelegateCommand RotateLeftCommond { get; }
+
         //IDelegateCommand ClearFileListCommand { get; }
 
-        /// <summary>
-        /// 選択されているファイルをファイル・リストから削除する
-        /// </summary>
-        //IDelegateCommand DeleteFileCommand { get; }
-
+        IDelegateCommand DeleteFileCommand { get; }
     }
 }

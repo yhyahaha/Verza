@@ -8,6 +8,7 @@ using ViewModel;
 using Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
 
 namespace ViewModelControlers
 {
@@ -20,17 +21,35 @@ namespace ViewModelControlers
         public MainViewModel()
         {
             this.workDirectory = "WORK";
+            imageIndex = -1;
+
         }
+
+        // Properties
 
         public string Message
         {
-            get { return message; }
+            get { return this.message; }
             set
             {
                 this.message = value;
                 OnPropertyChanged();
             }
         }
+
+        public BitmapSource ImageSource
+        {
+            get { return this.imageSource; }
+            set
+            {
+                this.imageSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        
+
+        // DelegateCommands
 
         public IDelegateCommand PickUpFilesCommand
         {
@@ -44,17 +63,108 @@ namespace ViewModelControlers
             }
         }
 
-        //public IDelegateCommand ClearFileListCommand => throw new NotImplementedException();
+        
+        public IDelegateCommand NextImageCommand
+        {
+            get
+            {
+                if (nextImageCommand == null)
+                {
+                    nextImageCommand = new DelegateCommand(ExecuteNextImageCommand, CanExecuteNextImageCommand);
+                }
+                return nextImageCommand;
+            }
+        }
 
-        //public IDelegateCommand DeleteFileCommand => throw new NotImplementedException();
+        public IDelegateCommand PreviousImageCommand
+        {
+            get
+            {
+                if (previousImageCommand == null)
+                {
+                    previousImageCommand = new DelegateCommand(ExecutePreviousImageCommand, CanExecutePreviousImageCommand);
+                }
+                return previousImageCommand;
+            }
+        }
 
+        public IDelegateCommand GoOcrCommand
+        {
+            get
+            {
+                if (goOcrCommand == null)
+                {
+                    //goOcrCommand = new DelegateCommand(ExecuteGoOcrCommand, CanExecuteGoOcrCommand);
+                }
+                return goOcrCommand;
+            }
+        }
+
+        public IDelegateCommand RotateRightCommond
+        {
+            get
+            {
+                if (rotateRightCommond == null)
+                {
+                    rotateRightCommond = new DelegateCommand(ExecuteRotateRightCommond, CanExecuteRotateCommand);
+                }
+                return rotateRightCommond;
+            }
+        }
+
+        public IDelegateCommand RotateLeftCommond
+        {
+            get
+            {
+                if (rotateLeftCommond == null)
+                {
+                    rotateLeftCommond = new DelegateCommand(ExecuteRotateLeftCommond, CanExecuteRotateCommand);
+                }
+                return rotateLeftCommond;
+            }
+        }
+
+        public IDelegateCommand ClearFilesCommand
+        {
+            get
+            {
+                if (clearFilesCommand == null)
+                {
+                    //clearFilesCommand = new DelegateCommand(ExecuteFilesClearCommand);
+                }
+                return clearFilesCommand;
+            }
+        }
+
+        public IDelegateCommand DeleteFileCommand
+        {
+            get
+            {
+                if (deleteFileCommand == null)
+                {
+                    deleteFileCommand = new DelegateCommand(ExecuteDeleteFileCommand, CanExecuteDeleteFileCommand);
+                }
+                return deleteFileCommand;
+            }
+        }
+
+        // INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        
+
         // Fields
+        private int imageIndex;
         private readonly string workDirectory;
         private string message;
+        private BitmapSource imageSource;
         private IDelegateCommand pickUpFilesCommand;
+        private IDelegateCommand nextImageCommand;
+        private IDelegateCommand previousImageCommand;
+        private IDelegateCommand goOcrCommand;
+        private IDelegateCommand rotateRightCommond;
+        private IDelegateCommand rotateLeftCommond;
+        private IDelegateCommand clearFilesCommand;
+        private IDelegateCommand deleteFileCommand;
     }
 }
