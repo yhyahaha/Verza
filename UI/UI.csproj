@@ -115,6 +115,10 @@
       <Project>{ce360d4c-d061-4d55-88b1-fc3457d7dc72}</Project>
       <Name>ViewModelControlers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsUwpOcr\UwpOcrForWpfLibrary.csproj">
+      <Project>{43dd86cb-c08a-4862-818f-de4e6fb36bea}</Project>
+      <Name>UwpOcrForWpfLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

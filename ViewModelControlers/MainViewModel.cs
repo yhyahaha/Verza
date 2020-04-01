@@ -19,13 +19,15 @@ namespace ViewModelControlers
         public ObservableCollection<ImageFileWithOcrResults> Items { get; private set; }
             = new ObservableCollection<ImageFileWithOcrResults>();
 
-        public MainViewModel()
+        public MainViewModel(IWindowsOCR engine)
         {
             this.deviceDpi = 97;
             this.workDirectory = "WORK";
             imageIndex = -1;
             SetComboBoxOcrParam();
             SetComboBoxOcrTemplats();
+
+            this.ocrEngine = engine;
         }
 
         // Initializer
@@ -249,5 +251,7 @@ namespace ViewModelControlers
         private IDelegateCommand rotateLeftCommond;
         private IDelegateCommand clearFileListCommand;
         private IDelegateCommand deleteFileCommand;
+
+        private IWindowsOCR ocrEngine;
     }
 }

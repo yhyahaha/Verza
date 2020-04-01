@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Interfaces;
 using ViewModelControlers;
+using UwpOcrForWpfLibrary;
 
 namespace UI
 {
@@ -17,7 +18,9 @@ namespace UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            IControler mainViewModel = new MainViewModel(); 
+            IWindowsOCR engine = new WindowsOCR();
+            
+            IControler mainViewModel = new MainViewModel(engine); 
             
             this.MainWindow = new MainView(mainViewModel);
             this.MainWindow.Show();
