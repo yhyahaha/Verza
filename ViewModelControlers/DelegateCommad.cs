@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Interfaces;
 
-namespace ViewModelClassLibrary
+namespace ViewModelControlers
 {
     internal class DelegateCommand : IDelegateCommand
     {

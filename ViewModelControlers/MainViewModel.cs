@@ -10,7 +10,7 @@ using Interfaces;
 
 namespace ViewModelControlers
 {
-    public class MainViewModel : IControler
+    public partial class MainViewModel : IControler
     {
         public ObservableCollection<ImageFileWithOcrResults> Items { get; private set; }
             = new ObservableCollection<ImageFileWithOcrResults>();
