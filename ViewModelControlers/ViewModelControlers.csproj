@@ -52,6 +52,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{a980552f-09c8-4c80-a1a7-5a850d4cb583}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModel\ViewModel.csproj">
       <Project>{937e8b97-919c-4ca5-8675-34ddd589fc41}</Project>
       <Name>ViewModel</Name>

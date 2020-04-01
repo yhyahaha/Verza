@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Interfaces;
 
 namespace UI
 {
@@ -20,9 +21,12 @@ namespace UI
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(IControler mainViewModel)
         {
             InitializeComponent();
+            this.mainVewModel = mainViewModel;
         }
+
+        private IControler mainVewModel;
     }
 }

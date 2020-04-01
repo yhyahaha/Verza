@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Interfaces;
+using ViewModelControlers;
 
 namespace UI
 {
@@ -15,7 +17,9 @@ namespace UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.MainWindow = new MainView();
+            IControler mainViewModel = new MainViewModel(); 
+            
+            this.MainWindow = new MainView(mainViewModel);
             this.MainWindow.Show();
         }
     }

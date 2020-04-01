@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    interface IControler
+    public interface IControler
     {
         /// <summary>
         /// FilePickerを使ってFileを取得する

@@ -104,5 +104,15 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{a980552f-09c8-4c80-a1a7-5a850d4cb583}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModelControlers\ViewModelControlers.csproj">
+      <Project>{ce360d4c-d061-4d55-88b1-fc3457d7dc72}</Project>
+      <Name>ViewModelControlers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
