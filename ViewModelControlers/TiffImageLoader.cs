@@ -112,32 +112,32 @@ namespace ViewModelControlers
         // ファイルのプロパティからイメージの高さを取得
         private int GetFileHeightProperty(string filePath)
         {
-            //Shell32.Shell shell = new Shell32.Shell();
-            //string res = "";
+            Shell32.Shell shell = new Shell32.Shell();
+            string res = "";
             int height = 0;
 
-            //try
-            //{
-            //    Shell32.Folder objFolder = shell.NameSpace(System.IO.Path.GetDirectoryName(filePath));
-            //    Shell32.FolderItem folderItem = objFolder.ParseName(System.IO.Path.GetFileName(filePath));
+            try
+            {
+                Shell32.Folder objFolder = shell.NameSpace(System.IO.Path.GetDirectoryName(filePath));
+                Shell32.FolderItem folderItem = objFolder.ParseName(System.IO.Path.GetFileName(filePath));
 
-            //    for (int i = 0; i < 300; i++)
-            //    {
-            //        if (objFolder.GetDetailsOf("", i) == "高さ")
-            //        {
-            //            res = objFolder.GetDetailsOf(folderItem, i);
-            //            break;
-            //        }
-            //    }
+                for (int i = 0; i < 300; i++)
+                {
+                    if (objFolder.GetDetailsOf("", i) == "高さ")
+                    {
+                        res = objFolder.GetDetailsOf(folderItem, i);
+                        break;
+                    }
+                }
 
-            //    Regex regex = new Regex("[0-9]+");
-            //    Match match = regex.Match(res);
-            //    if (match.Success) height = int.Parse(match.Value);
-            //}
-            //catch
-            //{
-            //    height = 0;
-            //}
+                Regex regex = new Regex("[0-9]+");
+                Match match = regex.Match(res);
+                if (match.Success) height = int.Parse(match.Value);
+            }
+            catch
+            {
+                height = 0;
+            }
 
             return height;
         }
