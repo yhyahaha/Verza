@@ -188,7 +188,7 @@ namespace ViewModelControlers
             RotateLeftCommond?.RaiseCanExecuteChanged();
             RotateRightCommond?.RaiseCanExecuteChanged();
             DeleteFileCommand?.RaiseCanExecuteChanged();
-            //goOcrCommand?.RaiseCanExecuteChanged();
+            goOcrCommand?.RaiseCanExecuteChanged();
 
         }
 

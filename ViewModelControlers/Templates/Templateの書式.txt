@@ -1,0 +1,14 @@
+Templateの書式
+
+<header>
+タイプ(string), 幅(pixel), 高さ(pixel), 解像度(dpi), 補正値_offset X (double), 補正値_offset Y(double), 単位のメモ, バージョンのメモ
+
+タイプ
+ISP : 社内スタッフ　制作センター
+ISC : 社内スタッフ　撮影照明センター
+IEP : 社内機材　制作センター
+IEC : 社内機材　撮影照明センター
+
+<BoundingBox> 単位 ﾐﾘﾒｰﾄﾙ
+(int) ID, (string) Name, (double) Left, (double) Top , (double) Width, (double) Height, (int)TabIndex
+

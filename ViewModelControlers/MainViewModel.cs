@@ -9,6 +9,7 @@ using Interfaces;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace ViewModelControlers
 {
@@ -22,7 +23,30 @@ namespace ViewModelControlers
         {
             this.workDirectory = "WORK";
             imageIndex = -1;
+            SetComboBoxOcrParam();
+            SetComboBoxOcrTemplats();
+        }
 
+        // Initializer
+
+        private void SetComboBoxOcrParam()
+        {
+            ocrParam = 0.6;
+            ocrParamList = new List<double>()
+            { 1.0, 0.95, 0.90, 0.85, 0.80, 0.75, 0.70, 0.65, 0.60, 0.55, 0.50, 0.45, 0.40 };
+        }
+
+        private void SetComboBoxOcrTemplats()
+        {
+            listOfOcrTemplates = new List<string>();
+
+            DirectoryInfo di = new DirectoryInfo("Templates");
+            var templateList = di.GetFiles();
+
+            foreach(var template in templateList)
+            {
+                listOfOcrTemplates.Add(template.Name);
+            }
         }
 
         // Properties
@@ -30,7 +54,7 @@ namespace ViewModelControlers
         public string Message
         {
             get { return this.message; }
-            set
+            private set
             {
                 this.message = value;
                 OnPropertyChanged();
@@ -40,24 +64,55 @@ namespace ViewModelControlers
         public BitmapSource ImageSource
         {
             get { return this.imageSource; }
-            set
+            private set
             {
                 this.imageSource = value;
                 OnPropertyChanged();
             }
         }
-
-        private double imageAngle;
+        
         public double ImageAngle
         {
-            get { return imageAngle; }
+            get { return this.imageAngle; }
             private set
             {
-                imageAngle = value;
+                if (value == this.imageAngle) return;
+                this.imageAngle = value;
                 OnPropertyChanged();
             }
         }
 
+        public double OcrParam
+        {
+            get { return this.ocrParam; }
+            set
+            {
+                if (value == this.ocrParam) return;
+                this.ocrParam = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<double> OcrParamList
+        {
+            get { return ocrParamList; }
+        }
+
+        public string OcrTemplate
+        {
+            get { return this.ocrTemplate; }
+            set
+            {
+                if (value == this.ocrTemplate) return;
+                this.ocrTemplate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> ListOfOcrTemplates
+        {
+            get { return this.listOfOcrTemplates; }
+        }
 
 
         // DelegateCommands
@@ -73,7 +128,6 @@ namespace ViewModelControlers
                 return pickUpFilesCommand;
             }
         }
-
         
         public IDelegateCommand NextImageCommand
         {
@@ -169,6 +223,11 @@ namespace ViewModelControlers
         private readonly string workDirectory;
         private string message;
         private BitmapSource imageSource;
+        private double imageAngle;
+        private double ocrParam;
+        private List<double> ocrParamList;
+        private string ocrTemplate;
+        private List<string> listOfOcrTemplates;
         private IDelegateCommand pickUpFilesCommand;
         private IDelegateCommand nextImageCommand;
         private IDelegateCommand previousImageCommand;

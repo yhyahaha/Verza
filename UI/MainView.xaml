@@ -117,8 +117,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="テンプレート"/>
                     <ComboBox Grid.Column="1" SelectedIndex="0"
-                              SelectedItem="{Binding TemplateName, Mode=TwoWay}" 
-                              ItemsSource="{Binding TemplateNameList}"/>
+                              SelectedItem="{Binding OcrTemplate, Mode=TwoWay}" 
+                              ItemsSource="{Binding ListOfOcrTemplates, Mode=OneTime}"/>
                 </Grid>
 
                 <Grid>
@@ -127,7 +127,9 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="OCR調整"/>
-                    <ComboBox Name="comboBoxOcrParam" Grid.Column="1" SelectedValue="{ Binding OcrParam, Mode=TwoWay }"/>
+                    <ComboBox Name="comboBoxOcrParam" Grid.Column="1" 
+                              ItemsSource="{ Binding OcrParamList, Mode=OneTime }"
+                              SelectedValue="{ Binding OcrParam, Mode=TwoWay }"/>
 
                 </Grid>
                 <Button Content="読み取り"/>
@@ -136,6 +138,8 @@
                 <Label Content="3. ASへ入力"/>
                 <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
+
+                <Image Source="pack://siteoforigin:,,,/Templates/Beatles.jpg"/>
 
             </StackPanel>
 

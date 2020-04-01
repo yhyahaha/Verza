@@ -8,3 +8,6 @@ dotnet_diagnostic.CA1305.severity = silent
 
 # CA1815: equals および operator equals を値型でオーバーライドします
 dotnet_diagnostic.CA1815.severity = silent
+
+# CA1822: メンバーを static に設定します
+dotnet_diagnostic.CA1822.severity = silent
