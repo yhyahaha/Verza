@@ -139,8 +139,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="クリア" Command="{Binding ClearFilesCommand}"/>
-                <!--<Button Name="buttonClose" Grid.Column="1" Content="閉じる" Click="buttonClose_Click"/>-->
-                <Button Name="buttonClose" Grid.Column="1" Content="閉じる"/>
+                <Button Name="buttonClose" Grid.Column="1" Content="閉じる" Click="buttonClose_Click"/>
             </Grid>
         </Grid>
 

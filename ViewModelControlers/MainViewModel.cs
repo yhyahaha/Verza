@@ -53,7 +53,7 @@ namespace ViewModelControlers
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         
         // Fields
-        private string workDirectory;
+        private readonly string workDirectory;
         private string message;
         private IDelegateCommand pickUpFilesCommand;
     }

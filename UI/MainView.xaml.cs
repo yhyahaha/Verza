@@ -24,8 +24,12 @@ namespace UI
         public MainView(IControler mainViewModel)
         {
             InitializeComponent();
-
             this.DataContext = mainViewModel;
+        }
+
+        private void buttonClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
