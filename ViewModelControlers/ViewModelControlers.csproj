@@ -51,5 +51,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+      <Project>{937e8b97-919c-4ca5-8675-34ddd589fc41}</Project>
+      <Name>ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

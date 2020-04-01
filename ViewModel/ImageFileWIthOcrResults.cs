@@ -7,7 +7,7 @@ using Interfaces;
 
 namespace ViewModel
 {
-    class ImageFileWithOcrResults : IOcrResult
+    class ImageFileWithOcrResults
     {
         public ImageFileWithOcrResults()
         {

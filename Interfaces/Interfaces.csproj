@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="IDelegateCommand.cs" />
     <Compile Include="IFileManipulation.cs" />
-    <Compile Include="IOcrResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScrapingRect.cs" />
   </ItemGroup>
