@@ -11,7 +11,7 @@ namespace Interfaces
         /// <summary>
         /// FilePickerを使ってFileを取得する
         /// </summary>
-        IDelegateCommand ShowFilePickerCommand { get; }
+        IDelegateCommand PickUpFilesCommand { get; }
 
         /// <summary>
         /// 取得したファイル・リストをクリアする

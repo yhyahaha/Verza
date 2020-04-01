@@ -15,10 +15,24 @@ namespace ViewModelControlers
         public ObservableCollection<ImageFileWithOcrResults> Items { get; private set; }
             = new ObservableCollection<ImageFileWithOcrResults>();
 
-        public IDelegateCommand ShowFilePickerCommand => throw new NotImplementedException();
+        public IDelegateCommand PickUpFilesCommand
+        {
+            get
+            {
+                if (pickUpFilesCommand == null)
+                {
+                    pickUpFilesCommand = new DelegateCommand(ExecutePickUpFilesCommand, CanExecutePickupCommand);
+                }
+                return pickUpFilesCommand;
+            }
+        }
 
         public IDelegateCommand ClearFileListCommand => throw new NotImplementedException();
 
         public IDelegateCommand DeleteFileCommand => throw new NotImplementedException();
+
+
+        // Fields
+        private IDelegateCommand pickUpFilesCommand;
     }
 }
