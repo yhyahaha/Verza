@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IControler.cs" />
     <Compile Include="IDelegateCommand.cs" />
     <Compile Include="IFileManipulation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
