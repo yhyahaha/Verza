@@ -70,7 +70,9 @@ namespace ViewModelControlers
 
         public void RotateTiffImage(string filePath, double rotation)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+            BitmapFrame transformed;
+
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 var bitmap = new BitmapImage();
                 bitmap.BeginInit();
@@ -82,10 +84,19 @@ namespace ViewModelControlers
                 TransformedBitmap transformedBitmap = new TransformedBitmap(bitmap, new RotateTransform(rotation));
                 transformedBitmap.Freeze();
 
-                BitmapFrame transformed = BitmapFrame.Create(transformedBitmap);
-                TiffBitmapEncoder encoder = new TiffBitmapEncoder();
-                encoder.Frames.Add(transformed);
-                encoder.Save(fileStream);
+                transformed = BitmapFrame.Create(transformedBitmap);
+                transformed.Freeze();
+            }
+
+            // ファイルを書き換えないとファイルサイズが増大するので一度削除
+            FileInfo fi = new FileInfo(filePath);
+            fi.Delete();
+
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Write))
+            {
+                TiffBitmapEncoder tiffEncoder = new TiffBitmapEncoder();
+                tiffEncoder.Frames.Add(transformed);
+                tiffEncoder.Save(fileStream);
             }
         }
 
