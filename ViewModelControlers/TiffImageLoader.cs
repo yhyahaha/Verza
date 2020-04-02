@@ -141,5 +141,24 @@ namespace ViewModelControlers
 
             return height;
         }
+
+        public string GetFileProperty(string filePath, string propertyName)
+        {
+            Shell32.Shell shell = new Shell32.Shell();
+            string val = "";
+
+            Shell32.Folder objFolder = shell.NameSpace(System.IO.Path.GetDirectoryName(filePath));
+            Shell32.FolderItem folderItem = objFolder.ParseName(System.IO.Path.GetFileName(filePath));
+
+            for (int i = 0; i < 300; i++)
+            {
+                if (objFolder.GetDetailsOf("", i) == propertyName)
+                {
+                    val = objFolder.GetDetailsOf(folderItem, i);
+                    break;
+                }
+            }
+            return val;
+        }
     }
 }

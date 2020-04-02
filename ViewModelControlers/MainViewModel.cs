@@ -26,6 +26,7 @@ namespace ViewModelControlers
             imageIndex = -1;
             SetComboBoxOcrParam();
             SetComboBoxOcrTemplats();
+            ShowFileInfo();
 
             this.ocrEngine = engine;
             OcrLanguage = this.ocrEngine?.OcrLanguage;
@@ -120,6 +121,11 @@ namespace ViewModelControlers
             {
                 if (value == this.ocrParam) return;
                 this.ocrParam = value;
+
+                if(this.imageSource != null)
+                {
+                    ShowImageWithScrapingRects();
+                }
                 OnPropertyChanged();
             }
         }
@@ -136,6 +142,11 @@ namespace ViewModelControlers
             {
                 if (value == this.ocrTemplate) return;
                 this.ocrTemplate = value;
+
+                if (this.imageSource != null)
+                {
+                    ShowImageWithScrapingRects();
+                }
                 OnPropertyChanged();
             }
         }
@@ -190,7 +201,7 @@ namespace ViewModelControlers
             {
                 if (goOcrCommand == null)
                 {
-                    //goOcrCommand = new DelegateCommand(ExecuteGoOcrCommand, CanExecuteGoOcrCommand);
+                    goOcrCommand = new DelegateCommand(ExecuteGoOcrCommand, CanExecuteGoOcrCommand);
                 }
                 return goOcrCommand;
             }

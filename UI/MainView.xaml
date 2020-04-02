@@ -70,9 +70,9 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="1">
-                <Label Content="{ Binding Message, Mode=OneWay }" Background="Beige" Height="25"/>
+                <Label Content="{ Binding Message, Mode=OneWay }" Background="Beige" Height="100"/>
                 <Label Content="1. TIFF イメージを指定する"/>
-                <Button Content="ファイルを選択" Command="{Binding PickUpFilesCommand}"/>
+                <Button Content="ファイルを指定" Command="{Binding PickUpFilesCommand}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -134,7 +134,7 @@
                               SelectedValue="{ Binding OcrParam, Mode=TwoWay }"/>
 
                 </Grid>
-                <Button Content="読み取り"/>
+                <Button Content="読み取り" Command="{Binding GoOcrCommand}"/>
                 <Button Content="一括読み取り"/>
 
                 <Label Content="3. ASへ入力"/>

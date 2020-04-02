@@ -54,6 +54,7 @@ namespace ViewModelControlers
                 ClearImages();
                 imageIndex++;
                 ShowImageWithScrapingRects();
+                ShowFileInfo();
             }
         }
 
@@ -66,18 +67,28 @@ namespace ViewModelControlers
                 ClearImages();
                 imageIndex--;
                 ShowImageWithScrapingRects();
+                ShowFileInfo();
             }
         }
 
         private bool CanExecutePreviousImageCommand() => (0 < Items.Count && 0 < imageIndex);
 
+        private void ExecuteGoOcrCommand()
+        {
+            Console.WriteLine("GoOCR");
+        }
+
+        private bool CanExecuteGoOcrCommand() => this.imageSource != null;
+
         private void ExecuteRotateRightCommond()
         {
             RotateImage(90.0);
+            ShowFileInfo();
         }
         private void ExecuteRotateLeftCommond()
         {
             RotateImage(-90.0);
+            ShowFileInfo();
         }
 
         private void RotateImage(double angle)
@@ -111,11 +122,12 @@ namespace ViewModelControlers
             }
             else
             {
-                ImageSource = null;
+                ClearImages();
                 imageIndex = -1;
-                Message = "";
+                
             }
 
+            ShowFileInfo();
             SetButtonsEnabled();
         }
 
@@ -126,8 +138,9 @@ namespace ViewModelControlers
             Items.Clear();
             ClearImages();
             SetButtonsEnabled();
+            ShowFileInfo();
+
             imageIndex = -1;
-            Message = msgReset;
         }
 
         private void ShowImageWithScrapingRects()
@@ -164,7 +177,7 @@ namespace ViewModelControlers
             //}
 
             SetButtonsEnabled();
-            Message = $"{imageIndex + 1} / { Items.Count}";
+            
         }
 
         private void ClearImages()
@@ -173,6 +186,30 @@ namespace ViewModelControlers
             ScrapingRectsImage = null;
             //BoundingRects = null;
             //engine.ClearResults();
+        }
+
+        private void ShowFileInfo()
+        {
+            if(Items.Count == 0)
+            {
+                Message = msgInitial;
+            }
+            else
+            {
+                string filePath = Items[imageIndex].FilePath;
+                TiffImageLoader loader = new TiffImageLoader();
+                string imageSize = loader.GetFileProperty(filePath, "大きさ");
+                string horizontalResolution = loader.GetFileProperty(filePath, "水平方向の解像度");
+                string verticalResolution = loader.GetFileProperty(filePath, "垂直方向の解像度");
+                string fileType = loader.GetFileProperty(filePath, "項目の種類");
+                string fileSize = loader.GetFileProperty(filePath, "サイズ");
+
+                Message = $"{imageIndex + 1} / { Items.Count}" + Environment.NewLine +
+                          $"大きさ : {imageSize}" + Environment.NewLine +
+                          $"解像度(H/V) : {horizontalResolution} × {verticalResolution}" + Environment.NewLine +
+                          $"種類 : {fileType}" + Environment.NewLine +
+                          $"サイズ : {fileSize }";
+            }
         }
 
         private void SetButtonsEnabled()
@@ -190,6 +227,7 @@ namespace ViewModelControlers
         // Message
         string errMsgNotAvailableLanguage = "指定の言語は利用できません";
         string msgReset = "クリアしました。";
+        string msgInitial = "Fileを指定してください。";
 
     }
 }
