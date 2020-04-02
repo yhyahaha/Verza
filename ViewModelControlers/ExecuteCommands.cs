@@ -73,12 +73,18 @@ namespace ViewModelControlers
 
         private bool CanExecutePreviousImageCommand() => (0 < Items.Count && 0 < imageIndex);
 
-        private void ExecuteGoOcrCommand()
+        private async void ExecuteGoOcrCommand()
         {
-            Console.WriteLine("GoOCR");
+            ocrEngine.ClearResults();
+            await ocrEngine.RecognizeAsync(this.ImageSource).ConfigureAwait(true);
+
+
+            Message = ocrEngine.OcrResults.Count.ToString();
+
+
         }
 
-        private bool CanExecuteGoOcrCommand() => this.imageSource != null;
+        private bool CanExecuteGoOcrCommand() => this.imageSource != null && ocrEngine.CanExecute;
 
         private void ExecuteRotateRightCommond()
         {

@@ -12,7 +12,7 @@ namespace Interfaces
         // Properties
         string Message { get; }
 
-        BitmapSource ImageSource { get; }
+        BitmapFrame ImageSource { get; }
 
         double ImageAngle { get; }
 

@@ -101,7 +101,7 @@ namespace ViewModelControlers
         }
 
 
-        public BitmapSource CreateBitmapSourceFromPath(string filePath, double decodeRate)
+        public BitmapFrame CreateBitmapSourceFromPath(string filePath, double decodeRate)
         {
             // DecodePixelHeight の既定値は 0 なので 正しい値が取れなくてもエラーにはならない
             int decodePixelHeight = (int)(GetFileHeightProperty(filePath) * decodeRate);
@@ -116,7 +116,7 @@ namespace ViewModelControlers
                 bitmap.EndInit();
                 bitmap.Freeze();
 
-                return bitmap;
+                return BitmapFrame.Create(bitmap);
             }
         }
 

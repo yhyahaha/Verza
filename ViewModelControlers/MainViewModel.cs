@@ -66,7 +66,7 @@ namespace ViewModelControlers
             }
         }
 
-        public BitmapSource ImageSource
+        public BitmapFrame ImageSource
         {
             get { return this.imageSource; }
             private set
@@ -265,7 +265,7 @@ namespace ViewModelControlers
         private int imageIndex;
         private readonly string workDirectory;
         private string message;
-        private BitmapSource imageSource;
+        private BitmapFrame imageSource;
         private double imageAngle;
         private BitmapSource scrapingRectsImage;
         private string ocrLanguage;
