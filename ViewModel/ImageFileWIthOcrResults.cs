@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +43,36 @@ namespace ViewModel
         public IList<ScrapingRect> ScrapingRects
         {
             get { return scrapingRects; }
+        }
+
+        public void ReadTemplate(string templatePath)
+        {
+            List<ScrapingRect> rects = new List<ScrapingRect>();
+
+            using (StreamReader reader = new StreamReader(templatePath))
+            {
+                reader.ReadLine();
+
+                while (!reader.EndOfStream)
+                {
+                    ScrapingRect rect = new ScrapingRect();
+
+                    var str = reader.ReadLine();
+                    string[] token = str.Split(',');
+
+                    rect.Id = int.Parse(token[0]);
+                    rect.Name = token[1];
+                    rect.Left = double.Parse(token[2]);
+                    rect.Top = double.Parse(token[3]);
+                    rect.Width = double.Parse(token[4]);
+                    rect.Height = double.Parse(token[5]);
+                    rect.Value = string.Empty;
+                    rect.TabIndex = int.Parse(token[6]);
+
+                    rects.Add(rect);
+                }
+            }
+            this.scrapingRects = rects;
         }
     }
 }

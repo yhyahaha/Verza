@@ -75,13 +75,29 @@ namespace ViewModelControlers
 
         private async void ExecuteGoOcrCommand()
         {
+            // Items.ScrapingRects
+            Items[imageIndex].ScrapingRects.Clear();
+
+            OcrTemplateLoader loader = new OcrTemplateLoader(this.deviceDpi);
+
+         
+
+            var templatePath = Path.Combine("Templates", this.ocrTemplate);
+            Items[imageIndex].ReadTemplate(templatePath);
+
             ocrEngine.ClearResults();
+
             await ocrEngine.RecognizeAsync(this.ImageSource).ConfigureAwait(true);
 
+            // 結果の保存
+            Items[imageIndex].OcrAngle = ocrEngine.OcrAngle;
+
+
+
+
+            ShowImageWithScrapingRects();
 
             Message = ocrEngine.OcrResults.Count.ToString();
-
-
         }
 
         private bool CanExecuteGoOcrCommand() => this.imageSource != null && ocrEngine.CanExecute;
@@ -160,7 +176,8 @@ namespace ViewModelControlers
 
             // ScrapingRectsImage
             var tempLoader = new OcrTemplateLoader(this.deviceDpi);
-            ScrapingRectsImage = tempLoader.GetImageFromTemplate(this.ocrTemplate);
+            var templatePath = Path.Combine("Templates", this.ocrTemplate);
+            ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath);
 
             // BoundingRect
             //if (engine.OcrResults.Count > 0)
@@ -231,8 +248,6 @@ namespace ViewModelControlers
         }
 
         // Message
-        string errMsgNotAvailableLanguage = "指定の言語は利用できません";
-        string msgReset = "クリアしました。";
         string msgInitial = "Fileを指定してください。";
 
     }

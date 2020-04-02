@@ -269,7 +269,6 @@ namespace ViewModelControlers
         private double imageAngle;
         private BitmapSource scrapingRectsImage;
         private string ocrLanguage;
-        private List<string> availableLanguages;
         private double ocrParam;
         private List<double> ocrParamList;
         private string ocrTemplate;
