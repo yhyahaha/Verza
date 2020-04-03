@@ -141,43 +141,45 @@ namespace UwpOcrForWpfLibrary
 
         public BitmapSource CreatBoundingRectImage(int imageWidth, int imageHeight, int deviceDpi)
         {
-            var bitmap = new RenderTargetBitmap(imageWidth, imageHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32);
+            var bitmap = new WriteableBitmap(imageWidth, imageHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32, null);
 
             if (!this.ocrResults.Any()) return bitmap;
 
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-            SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(64, 0, 150, 0));
-            brush.Freeze();
-            
-            foreach(var res in this.ocrResults)
+            foreach(var result in this.ocrResults)
             {
-                Rect rect = new Rect(res.RectLeft, res.RectTop, res.RectWidth, res.RectHeight);
-                drawingContext.DrawRectangle(brush, null, rect);
+                int left = (int)result.RectLeft;
+                int top = (int)result.RectTop;
+                int width = (int)result.RectWidth;
+                int height = (int)result.RectHeight;
+                int stride = (int)result.RectWidth * 4;
+
+                var pixels = GetRectPixels(width, height);
+                Int32Rect rect = new Int32Rect(0, 0, width, height);                
+                bitmap.WritePixels(rect, pixels, stride, left, top);
             }
-
-            Rect rect1 = new Rect(100, 100, imageWidth-200, imageHeight-200);
-            drawingContext.DrawRectangle(null ,new Pen(Brushes.Blue,1.0), rect1);
-
-            Rect rect2 = new Rect(0,0, 100, 100);
-            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect2);
-
-            Rect rect3 = new Rect(imageWidth-100, 0,100,100);
-            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect3);
-
-            Rect rect4 = new Rect(0,imageHeight-100, 100,100);
-            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect4);
-
-            Rect rect5 = new Rect(imageWidth - 100, imageHeight - 100,100,100);
-            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect5);
-
-            drawingContext.Close();
-            bitmap.Render(drawingVisual);
 
             bitmap.Freeze();
 
             return bitmap;
         }
+
+
+        private byte[] GetRectPixels(int width, int height)
+        {
+            int pixelSize = width * height * 4;
+            byte[] pixels = new byte[pixelSize];
+
+            for(int x=0; x < pixelSize; x = x + 4)
+            {
+                pixels[x] = 0;      // Blue
+                pixels[x+1] = 255;  // Green
+                pixels[x+2] = 0;    // Red
+                pixels[x+3] = 60;  // Alpha
+            }
+
+            return pixels;
+        }
+
 
         public void ClearResults()
         {
