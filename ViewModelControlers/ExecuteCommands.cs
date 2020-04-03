@@ -174,7 +174,8 @@ namespace ViewModelControlers
             // ScrapingRectsImage
             var tempLoader = new OcrTemplateLoader(this.deviceDpi);
             var templatePath = Path.Combine("Templates", this.ocrTemplate);
-            ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath);
+            int lineThickness = 3;
+            ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath,lineThickness);
 
             //BoundingRectsImage
             if (ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)

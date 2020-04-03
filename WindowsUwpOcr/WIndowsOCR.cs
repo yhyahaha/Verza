@@ -174,7 +174,7 @@ namespace UwpOcrForWpfLibrary
                 pixels[x] = 0;      // Blue
                 pixels[x+1] = 255;  // Green
                 pixels[x+2] = 0;    // Red
-                pixels[x+3] = 60;  // Alpha
+                pixels[x+3] = 30;  // Alpha
             }
 
             return pixels;

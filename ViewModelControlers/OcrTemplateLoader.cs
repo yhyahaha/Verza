@@ -27,9 +27,9 @@ namespace ViewModelControlers
             this.deviceDpi = deviceDpi;
         }
 
-        public RenderTargetBitmap GetImageFromTemplate(string templatePath)
+        public WriteableBitmap GetImageFromTemplate(string templatePath,int lineThickness)
         {
-            RenderTargetBitmap bmp;
+            WriteableBitmap bmp;
 
             using (StreamReader reader = new StreamReader(templatePath))
             {
@@ -42,31 +42,98 @@ namespace ViewModelControlers
                 double adjustX = double.Parse(token[4]);
                 double adjustY = double.Parse(token[5]);
 
-                bmp = new RenderTargetBitmap(pixelWidth, pixelHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32);
-
-                DrawingVisual drawingVisual = new DrawingVisual();
-                DrawingContext drawingContext = drawingVisual.RenderOpen();
-                Pen pen = new Pen(Brushes.Red, 5.0);
+                bmp = new WriteableBitmap(pixelWidth, pixelHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32,null);
 
                 while (!reader.EndOfStream)
                 {
                     string str = reader.ReadLine();
                     string[] info = str.Split(',');
 
-                    double codinateLeft = (double.Parse(info[2]) + adjustX) ;
-                    double codinateTop = (double.Parse(info[3]) + adjustY) ;
-                    double width = double.Parse(info[4]);
-                    double height = double.Parse(info[5]);
-                    Rect rect = new Rect(codinateLeft, codinateTop, width, height);
+                    int width = (int)double.Parse(info[4]);
+                    int height = (int)double.Parse(info[5]);
+                    byte[] pixels = GetRectPixels(width, height, lineThickness);
 
-                    drawingContext.DrawRectangle(null, pen, rect);
+                    if(pixels != null)
+                    {
+                        Int32Rect rect = new Int32Rect(0, 0, width, height);
+                        int stride = width * 4;
+                        int codinateLeft = (int)(double.Parse(info[2]) + adjustX);
+                        int codinateTop = (int)(double.Parse(info[3]) + adjustY);
+
+                        bmp.WritePixels(rect, pixels, stride, codinateLeft, codinateTop);
+                    }
                 }
-                drawingContext.Close();
-
-                bmp.Render(drawingVisual);
             }
 
             return bmp;
+        }
+
+        private byte[] GetRectPixels(int width, int height, int thickness)
+        {
+            // width 10 以上, height 10 以上, thickness 1 以上
+            if (width < 10) return null;
+            if (height < 10) return null;
+            if (thickness < 1) return null;
+            if (width < thickness * 2) return null;
+            if (height < thickness * 2) return null;
+            
+            // 描画用byte[]
+            int pixelsSize = width * height * 4;
+            byte[] pixels = new byte[pixelsSize];
+
+            // Left_Line
+            for(int x=0; x < pixelsSize; x = x + (width * 4))
+            {
+                int factor = 4;
+                for(int t=0; t < thickness; t++)
+                {
+                    pixels[x + (t * factor)] = 0;          // Blue
+                    pixels[x + 1 + (t * factor)] = 0;      // Green
+                    pixels[x + 2 + (t * factor)] = 255;    // Red
+                    pixels[x + 3 + (t * factor)] = 255;    // Alpha
+                }
+            }
+
+            // Top_Line
+            for (int x = 0; x < width * 4; x = x + 4)
+            {
+                int factor = width * 4;
+                for (int t = 0; t < thickness; t++)
+                {
+                    pixels[x + (t * factor)] = 0;          // Blue
+                    pixels[x + 1 + (t * factor)] = 0;      // Green
+                    pixels[x + 2 + (t * factor)] = 255;    // Red
+                    pixels[x + 3 + (t * factor)] = 255;    // Alpha
+                }
+            }
+
+            // Right_line
+            for (int x = (width - 1) * 4 ; x < pixelsSize; x = x + (width * 4))
+            {
+                int factor = -4;
+                for (int t = 0; t < thickness; t++)
+                {
+                    pixels[x + (t * factor)] = 0;          // Blue
+                    pixels[x + 1 + (t * factor)] = 0;      // Green
+                    pixels[x + 2 + (t * factor)] = 255;    // Red
+                    pixels[x + 3 + (t * factor)] = 255;    // Alpha
+                }
+            }
+
+            // BottomLine
+            for (int x = (width * 4 * (height-1)); x < pixelsSize; x = x + 4)
+            {
+                int factor = width * -4;
+                for (int t = 0; t < thickness; t++)
+                {
+                    pixels[x + (t * factor)] = 0;          // Blue
+                    pixels[x + 1 + (t * factor)] = 0;      // Green
+                    pixels[x + 2 + (t * factor)] = 255;    // Red
+                    pixels[x + 3 + (t * factor)] = 255;    // Alpha
+                }
+            }
+
+            return pixels;
         }
 
         private string errMsgDeviceDpiInvalid= "指定のDeviceDpiが無効です。";
