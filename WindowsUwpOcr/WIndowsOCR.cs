@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Interfaces;
-using BitmapFrame = System.Windows.Media.Imaging.BitmapFrame;
-using UwpLanguage = Windows.Globalization.Language;
+using System.Windows.Media;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 // UWPのOCR、SoftWareBitmap
+using UwpLanguage = Windows.Globalization.Language;
 using UwpOcrEngine = Windows.Media.Ocr.OcrEngine;
 using UwpOcrResult = Windows.Media.Ocr.OcrResult;
 using UwpSoftwareBitmap = Windows.Graphics.Imaging.SoftwareBitmap;
@@ -137,11 +139,52 @@ namespace UwpOcrForWpfLibrary
             }   
         }
 
+        public BitmapSource CreatBoundingRectImage(int imageWidth, int imageHeight, int deviceDpi)
+        {
+            var bitmap = new RenderTargetBitmap(imageWidth, imageHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32);
+
+            if (!this.ocrResults.Any()) return bitmap;
+
+            DrawingVisual drawingVisual = new DrawingVisual();
+            DrawingContext drawingContext = drawingVisual.RenderOpen();
+            SolidColorBrush brush = new SolidColorBrush(Color.FromArgb(64, 0, 150, 0));
+            brush.Freeze();
+            
+            foreach(var res in this.ocrResults)
+            {
+                Rect rect = new Rect(res.RectLeft, res.RectTop, res.RectWidth, res.RectHeight);
+                drawingContext.DrawRectangle(brush, null, rect);
+            }
+
+            Rect rect1 = new Rect(100, 100, imageWidth-200, imageHeight-200);
+            drawingContext.DrawRectangle(null ,new Pen(Brushes.Blue,1.0), rect1);
+
+            Rect rect2 = new Rect(0,0, 100, 100);
+            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect2);
+
+            Rect rect3 = new Rect(imageWidth-100, 0,100,100);
+            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect3);
+
+            Rect rect4 = new Rect(0,imageHeight-100, 100,100);
+            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect4);
+
+            Rect rect5 = new Rect(imageWidth - 100, imageHeight - 100,100,100);
+            drawingContext.DrawRectangle(null, new Pen(Brushes.Blue, 1.0), rect5);
+
+            drawingContext.Close();
+            bitmap.Render(drawingVisual);
+
+            bitmap.Freeze();
+
+            return bitmap;
+        }
+
         public void ClearResults()
         {
             ocrAngle = 0.0;
             ocrResults.Clear();
         }
+
 
         string errMsgFailedToConstract = "TryCreateFromUserProfileLanguagesメソッドでの初期化に失敗しました。";
         string errMsgFailedToSetLanguage = "OcrEngineの言語設定で利用できない言語が指定されました。";

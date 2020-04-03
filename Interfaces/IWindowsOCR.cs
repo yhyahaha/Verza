@@ -50,6 +50,15 @@ namespace Interfaces
         /// <returns></returns>
         Task RecognizeAsync(BitmapFrame bitmapFrame);
 
+
+        /// <summary>
+        /// OCR実行結果を表現するBitmapSource
+        /// </summary>
+        /// <param name="imageWidth"></param>
+        /// <param name="imageHeight"></param>
+        /// <returns></returns>
+        BitmapSource CreatBoundingRectImage(int imageWidth, int imageHeight,int deviceDpi);
+
         void ClearResults();
     }
 }

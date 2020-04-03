@@ -40,19 +40,16 @@
         </Grid.RowDefinitions>
 
         <!--OCR Image-->
-        <Grid>
-            <Border Background="AliceBlue" Padding="10">
-                <Image Name="image" 
-                       Source="{ Binding ImageSource }" 
-                       RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <RotateTransform Angle="{Binding ImageAngle}"/>
-                    </Image.RenderTransform>
-                </Image>
-            </Border>
-            <Viewbox x:Name="viewboxScrapingRects">
-                <Image x:Name="scrapingRects" Source="{Binding ScrapingRectsImage }"/>
-            </Viewbox>
+        <Grid Background="AliceBlue" >
+            <Image Name="image" Margin="10" 
+                    Source="{ Binding ImageSource, Mode=OneWay}" 
+                    RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="{Binding ImageAngle}"/>
+                </Image.RenderTransform>
+            </Image>
+            <Image Name="i2" Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
+            <Image Name="i3" Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
         </Grid>
 
         <!--AS転送-->
@@ -140,6 +137,8 @@
                 <Label Content="3. ASへ入力"/>
                 <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
+
+                <Button Name="s" Click="s_Click"/>
 
 
             </StackPanel>

@@ -90,9 +90,19 @@ namespace ViewModelControlers
         public BitmapSource ScrapingRectsImage
         {
             get { return this.scrapingRectsImage; }
-            set
+            private set
             {
                 this.scrapingRectsImage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public BitmapSource BoundingRectsImage
+        {
+            get { return this.boundingRectsImage; }
+            private set
+            {
+                this.boundingRectsImage = value;
                 OnPropertyChanged();
             }
         }
@@ -105,6 +115,7 @@ namespace ViewModelControlers
                 if (value == ocrLanguage) return;
                 this.ocrLanguage = value;
                 this.ocrEngine.SetOcrLanguage(this.ocrLanguage);
+                ClearImages();
                 OnPropertyChanged();
             }
         }
@@ -124,6 +135,7 @@ namespace ViewModelControlers
 
                 if(this.imageSource != null)
                 {
+                    ClearImages();
                     ShowImageWithScrapingRects();
                 }
                 OnPropertyChanged();
@@ -145,6 +157,7 @@ namespace ViewModelControlers
 
                 if (this.imageSource != null)
                 {
+                    ClearImages();
                     ShowImageWithScrapingRects();
                 }
                 OnPropertyChanged();
@@ -268,6 +281,7 @@ namespace ViewModelControlers
         private BitmapFrame imageSource;
         private double imageAngle;
         private BitmapSource scrapingRectsImage;
+        private BitmapSource boundingRectsImage;
         private string ocrLanguage;
         private double ocrParam;
         private List<double> ocrParamList;
@@ -300,7 +314,7 @@ namespace ViewModelControlers
 
         public void TestMethod()
         {
-            Console.WriteLine(ocrEngine.OcrLanguage);
+            Message = $"{this.imageSource.PixelWidth} ";
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Interfaces
 
         BitmapSource ScrapingRectsImage { get; }
 
+        BitmapSource BoundingRectsImage { get; }
+
         IList<string> AvailableLanguages { get; }
 
         string OcrLanguage { get; set; }

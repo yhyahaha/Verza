@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ViewModel;
 
 namespace ViewModelControlers
@@ -77,20 +79,16 @@ namespace ViewModelControlers
         {
             // Items.ScrapingRects
             Items[imageIndex].ScrapingRects.Clear();
-
-            OcrTemplateLoader loader = new OcrTemplateLoader(this.deviceDpi);
-
-         
-
-            var templatePath = Path.Combine("Templates", this.ocrTemplate);
+            string templatePath = Path.Combine("Templates", ocrTemplate);
             Items[imageIndex].ReadTemplate(templatePath);
 
+            // OCR実行
             ocrEngine.ClearResults();
-
             await ocrEngine.RecognizeAsync(this.ImageSource).ConfigureAwait(true);
 
             // 結果の保存
             Items[imageIndex].OcrAngle = ocrEngine.OcrAngle;
+
 
 
 
@@ -146,7 +144,6 @@ namespace ViewModelControlers
             {
                 ClearImages();
                 imageIndex = -1;
-                
             }
 
             ShowFileInfo();
@@ -179,25 +176,13 @@ namespace ViewModelControlers
             var templatePath = Path.Combine("Templates", this.ocrTemplate);
             ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath);
 
-            // BoundingRect
-            //if (engine.OcrResults.Count > 0)
-            //{
-            //    BitmapFrame bitmapFrame = BitmapFrame.Create(ImageSource);
-
-            //    // UIの OverlayViewBox に BoundingRect を描画した WritableBitmap を提供
-            //    int width = bitmapFrame.PixelWidth;
-            //    int height = bitmapFrame.PixelHeight;
-            //    double dpiX = bitmapFrame.DpiX;
-            //    double dpiY = bitmapFrame.DpiY;
-
-            //    WriteableBitmap resultRects =
-            //        new WriteableBitmap(width, height, dpiX, dpiY, PixelFormats.Pbgra32, null);
-
-            //    DrawBoundingBoxs(ref resultRects);
-            //    resultRects.Freeze();
-
-            //    BoundingRects = resultRects;
-            //}
+            //BoundingRectsImage
+            if (ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
+            {
+                int width = ImageSource.PixelWidth;
+                int height = ImageSource.PixelHeight;
+                BoundingRectsImage = ocrEngine.CreatBoundingRectImage(width,height,97);
+            }
 
             SetButtonsEnabled();
             
@@ -207,8 +192,8 @@ namespace ViewModelControlers
         {
             ImageSource = null;
             ScrapingRectsImage = null;
-            //BoundingRects = null;
-            //engine.ClearResults();
+            BoundingRectsImage = null;
+            ocrEngine.ClearResults();
         }
 
         private void ShowFileInfo()
@@ -244,7 +229,6 @@ namespace ViewModelControlers
             RotateRightCommond?.RaiseCanExecuteChanged();
             DeleteFileCommand?.RaiseCanExecuteChanged();
             goOcrCommand?.RaiseCanExecuteChanged();
-
         }
 
         // Message
