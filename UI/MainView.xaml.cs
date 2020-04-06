@@ -31,12 +31,5 @@ namespace UI
         {
             this.Close();
         }
-
-        private void s_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine($"I1:height {this.image.ActualHeight} width {this.image.ActualWidth} rate {this.image.ActualHeight / this.image.ActualWidth}");
-            Console.WriteLine($"I2:height {this.i2.ActualHeight} width {this.i2.ActualWidth} rate {this.i2.ActualHeight / this.i2.ActualWidth}");
-            Console.WriteLine($"I3:height {this.i3.ActualHeight} width {this.i3.ActualWidth} rate {this.i3.ActualHeight / this.i3.ActualWidth}");
-        }
     }
 }

@@ -132,14 +132,11 @@
 
                 </Grid>
                 <Button Content="読み取り" Command="{Binding GoOcrCommand}"/>
-                <Button Content="一括読み取り"/>
+                <Button Content="一括読み取り" IsEnabled="False"/>
 
                 <Label Content="3. ASへ入力"/>
                 <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
-
-                <Button Name="s" Click="s_Click"/>
-
 
             </StackPanel>
 
