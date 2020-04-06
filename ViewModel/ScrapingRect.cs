@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    public struct ScrapingRect
+    public class ScrapingRect
     {
         public int Id { get; set; }
         public string Name { get; set; }

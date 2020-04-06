@@ -314,7 +314,8 @@ namespace ViewModelControlers
 
         public void TestMethod()
         {
-            Message = $"{this.imageSource.PixelWidth} ";
+            Message = $"Items[0].ScrapingRects[0].Value {Items[0].ScrapingRects[0].Value} ";
+            
         }
     }
 }

@@ -135,8 +135,12 @@
                 <Button Content="一括読み取り" IsEnabled="False"/>
 
                 <Label Content="3. ASへ入力"/>
-                <!--<Button Name="buttonGridChange" Content="入力画面を開く" Click="buttonGridChange_Click"/>-->
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
+                
+                <!--開発用-->
+                <ScrollViewer>
+                    <TextBlock Name="textblockResuts"/>
+                </ScrollViewer>
 
             </StackPanel>
 

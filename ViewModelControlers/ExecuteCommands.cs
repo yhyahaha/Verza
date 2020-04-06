@@ -89,13 +89,36 @@ namespace ViewModelControlers
             // 結果の保存
             Items[imageIndex].OcrAngle = ocrEngine.OcrAngle;
 
+            int counter = 0;
+            var results = ocrEngine.OcrResults;
+            foreach(var scrapingRect in Items[imageIndex].ScrapingRects)
+            {
+                int id = scrapingRect.Id;
+                var result = results
+                    .Where(res => scrapingRect.Left * OcrParam            <= res.RectLeft &&
+                                  scrapingRect.Top * OcrParam             <= res.RectTop &&
+                                  res.RectLeft + res.RectWidth * ocrParam <= (scrapingRect.Left + scrapingRect.Width) * ocrParam &&
+                                  res.RectTop + res.RectHeight            <= (scrapingRect.Top + scrapingRect.Height) * ocrParam)
+                    .OrderBy(x => x.RectLeft).Select(x => x.Words);
 
+                if (result != null)
+                {
+                    string resultWord = "";                    
+                    foreach (var word in result) resultWord += word.Trim();
 
+                    if (resultWord.Length > 0)
+                    {
+                        var item = Items[imageIndex].ScrapingRects.Where(x => x.Id == id).First();
+                        if (item != null) item.Value = resultWord;
 
+                        counter++;
+                    }
+                }
+            }
 
             ShowImageWithScrapingRects();
 
-            Message = ocrEngine.OcrResults.Count.ToString();
+            Message = $"{counter}件読み取りました。";
         }
 
         private bool CanExecuteGoOcrCommand() => this.imageSource != null && ocrEngine.CanExecute;
@@ -186,7 +209,6 @@ namespace ViewModelControlers
             }
 
             SetButtonsEnabled();
-            
         }
 
         private void ClearImages()

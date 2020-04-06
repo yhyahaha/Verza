@@ -39,8 +39,8 @@ namespace ViewModel
             }
         }
 
-        private IList<ScrapingRect> scrapingRects;            
-        public IList<ScrapingRect> ScrapingRects
+        private List<ScrapingRect> scrapingRects;            
+        public List<ScrapingRect> ScrapingRects
         {
             get { return scrapingRects; }
         }
@@ -73,6 +73,13 @@ namespace ViewModel
                 }
             }
             this.scrapingRects = rects;
+        }
+
+        public void SetScrapingRectValue(int rectId,string resultValue)
+        {
+            if (rectId >= this.scrapingRects.Count) return;
+            string s = this.scrapingRects[rectId].Value;
+            scrapingRects[rectId].Value = "aa";
         }
     }
 }
