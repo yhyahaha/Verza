@@ -31,5 +31,13 @@ namespace UI
         {
             this.Close();
         }
+
+        private void scrapingImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount >= 2)
+            {
+                (this.DataContext as IControler).ReOcrScrapingRectById(1);
+            }
+        }
     }
 }

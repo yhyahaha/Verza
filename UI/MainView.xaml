@@ -48,8 +48,10 @@
                     <RotateTransform Angle="{Binding ImageAngle}"/>
                 </Image.RenderTransform>
             </Image>
-            <Image Name="i2" Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
-            <Image Name="i3" Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
+            <Image Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
+            <Image x:Name="scrapingImage" MouseLeftButtonDown="scrapingImage_MouseLeftButtonDown"
+                Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
+
         </Grid>
 
         <!--AS転送-->

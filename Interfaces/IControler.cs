@@ -48,5 +48,8 @@ namespace Interfaces
         IDelegateCommand ClearFileListCommand { get; }
 
         IDelegateCommand DeleteFileCommand { get; }
+
+        // Public Method
+        void ReOcrScrapingRectById(int scrapingRectId);
     }
 }

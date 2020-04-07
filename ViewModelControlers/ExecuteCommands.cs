@@ -254,6 +254,11 @@ namespace ViewModelControlers
             goOcrCommand?.RaiseCanExecuteChanged();
         }
 
+        public void ReOcrScrapingRectById(int scrapingRectId)
+        {
+            Message = scrapingRectId.ToString();
+        }
+
         // Message
         string msgInitial = "Fileを指定してください。";
 
