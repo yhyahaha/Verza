@@ -52,7 +52,7 @@ namespace ViewModelControlers
                 }
             }
         }
-
+        
         private void SaveBitmapFrameAsTiffImage(BitmapFrame bitmapFrame, TiffCompressOption compressOption, string saveDirectory, string fileName)
         {
             TiffBitmapEncoder encoder = new TiffBitmapEncoder();

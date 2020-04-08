@@ -39,5 +39,25 @@ namespace UI
                 (this.DataContext as IControler).ReOcrScrapingRectById(1);
             }
         }
+
+        private void checkBoxScrapingRects_Checked(object sender, RoutedEventArgs e)
+        {
+            this.scrapingImage.Visibility = Visibility.Visible;
+        }
+
+        private void checkBoxScrapingRects_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.scrapingImage.Visibility = Visibility.Collapsed;
+        }
+
+        private void checkBoxBoundingRects_Checked(object sender, RoutedEventArgs e)
+        {
+            this.boundingImage.Visibility = Visibility.Visible;
+        }
+
+        private void checkBoxBoundingRects_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.boundingImage.Visibility = Visibility.Collapsed;
+        }
     }
 }

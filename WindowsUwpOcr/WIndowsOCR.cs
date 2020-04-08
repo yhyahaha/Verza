@@ -163,7 +163,6 @@ namespace UwpOcrForWpfLibrary
             return bitmap;
         }
 
-
         private byte[] GetRectPixels(int width, int height)
         {
             int pixelSize = width * height * 4;
@@ -180,13 +179,11 @@ namespace UwpOcrForWpfLibrary
             return pixels;
         }
 
-
         public void ClearResults()
         {
             ocrAngle = 0.0;
             ocrResults.Clear();
         }
-
 
         string errMsgFailedToConstract = "TryCreateFromUserProfileLanguagesメソッドでの初期化に失敗しました。";
         string errMsgFailedToSetLanguage = "OcrEngineの言語設定で利用できない言語が指定されました。";

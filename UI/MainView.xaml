@@ -48,7 +48,7 @@
                     <RotateTransform Angle="{Binding ImageAngle}"/>
                 </Image.RenderTransform>
             </Image>
-            <Image Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
+            <Image x:Name="boundingImage" Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
             <Image x:Name="scrapingImage" MouseLeftButtonDown="scrapingImage_MouseLeftButtonDown"
                 Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
 
@@ -143,7 +143,6 @@
                 <ScrollViewer>
                     <TextBlock Name="textblockResuts"/>
                 </ScrollViewer>
-
             </StackPanel>
 
             <Grid Grid.Row="1">
@@ -151,8 +150,16 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="クリア" Command="{Binding ClearFileListCommand}"/>
-                <Button Name="buttonClose" Grid.Column="1" Content="閉じる" Click="buttonClose_Click"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <CheckBox Name="checkBoxScrapingRects" Grid.Column="0" Content="テンプレート" Margin="5" IsChecked="True"
+                          Checked="checkBoxScrapingRects_Checked" Unchecked="checkBoxScrapingRects_Unchecked"/>
+                <CheckBox Name="checkBoxBoundingRects" Grid.Column="1" Content="BoundingBox" Margin="5" IsChecked="True"
+                          Checked="checkBoxBoundingRects_Checked" Unchecked="checkBoxBoundingRects_Unchecked"/>
+                <Button Grid.Column="0" Grid.Row="1" Content="クリア" Command="{Binding ClearFileListCommand}"/>
+                <Button Name="buttonClose" Grid.Column="1" Grid.Row="1" Content="閉じる" Click="buttonClose_Click"/>
             </Grid>
         </Grid>
 

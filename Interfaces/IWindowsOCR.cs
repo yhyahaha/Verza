@@ -26,7 +26,7 @@ namespace Interfaces
         /// WinOcrResult構造体のリストで返す
         /// </summary>
         IList<WinOcrResult> OcrResults { get; }
-
+        
         bool HasResults { get; }
 
         /// <summary>
@@ -49,7 +49,6 @@ namespace Interfaces
         /// <param name="bitmapFrame"></param>
         /// <returns></returns>
         Task RecognizeAsync(BitmapFrame bitmapFrame);
-
 
         /// <summary>
         /// OCR実行結果を表現するBitmapSource
