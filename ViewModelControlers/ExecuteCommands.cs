@@ -89,6 +89,9 @@ namespace ViewModelControlers
             var results = ocrEngine.OcrResults;
             foreach(var scrapingRect in Items[imageIndex].ScrapingRects)
             {
+                // 読み取り結果がある場合は保持
+                if (!string.IsNullOrEmpty(scrapingRect.Value)) continue;
+                
                 int id = scrapingRect.Id;
                 var result = results
                     .Where(res => scrapingRect.Left * OcrParam            <= res.RectLeft &&
@@ -130,7 +133,7 @@ namespace ViewModelControlers
             SetButtonsEnabled();
         }
 
-        private bool CanExecuteClearOcrCommand() => this.imageSource != null && ocrEngine.HasResults;
+        private bool CanExecuteClearOcrCommand() => this.imageSource != null && ocrEngine.CanExecute;
 
         private void ExecuteRotateRightCommond()
         {
@@ -194,7 +197,7 @@ namespace ViewModelControlers
             imageIndex = -1;
         }
 
-        private void ShowImageWithScrapingRects()
+        private void ShowImageWithScrapingRects(bool singleScrapingRect = false)
         {
             // ImageSource
             TiffImageLoader imageLoader = new TiffImageLoader();
@@ -217,7 +220,7 @@ namespace ViewModelControlers
 
             // ResultRects
             var scrapingRects = Items[imageIndex].ScrapingRects;
-            if (scrapingRects.Any() && ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
+            if (scrapingRects.Any() &&  scrapingRectsImage != null)
             {
                 int width = (int)(this.ImageSource.PixelWidth / this.ocrParam);
                 int height = (int)(this.ImageSource.PixelHeight / this.ocrParam);
@@ -238,7 +241,7 @@ namespace ViewModelControlers
             }
 
             // BoundingRectsImage
-            if (ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
+            if (ocrEngine.OcrResults.Count > 0 && !singleScrapingRect)
             {
                 int width = ImageSource.PixelWidth;
                 int height = ImageSource.PixelHeight;
@@ -315,24 +318,21 @@ namespace ViewModelControlers
             ocrEngine.ClearResults();
             await ocrEngine.RecognizeAsync(frame).ConfigureAwait(true);
 
+            string words = "";
             if (ocrEngine.HasResults)
             {
-                Message = ocrEngine.OcrResults[0].Words;
+                var results = ocrEngine.OcrResults.OrderBy(x => x.RectLeft);
+                foreach(var res in results)
+                {
+                    words += res.Words.Trim();
+                }
             }
+            target.Value = words;
 
-            
+            bool singleScrapingRectOcr = true;
+            ShowImageWithScrapingRects(singleScrapingRectOcr);
 
-
-
-            // recognazeAsync
-
-
-            // 
-
-
-               
-
-
+            Message = words;
         }
 
         // Message
