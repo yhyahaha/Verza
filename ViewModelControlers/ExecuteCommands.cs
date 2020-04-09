@@ -200,12 +200,36 @@ namespace ViewModelControlers
             int lineThickness = 3;
             ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath,lineThickness);
 
-            //BoundingRectsImage
+            // ResultRects
+            var scrapingRects = Items[imageIndex].ScrapingRects;
+            if (scrapingRects.Any() && ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
+            {
+                int width = (int)(this.ImageSource.PixelWidth / this.ocrParam);
+                int height = (int)(this.ImageSource.PixelHeight / this.ocrParam);
+                tempLoader.CreateOcrResultImage(width, height, 97);
+
+                foreach(var rect in scrapingRects)
+                {
+                    if (string.IsNullOrEmpty(rect.Value)) continue;
+                    
+                    var rectLeft = (int)rect.Left;
+                    var rectTop = (int)rect.Top;
+                    var rectWidth = (int)rect.Width;
+                    var rectHeight = (int)rect.Height;
+
+                    tempLoader.DrawResultRectOnOcrResultImage(rectLeft, rectTop, rectWidth, rectHeight);
+                }
+
+                this.OcrResutImage = tempLoader.GetOcrResultImage();
+
+            }
+
+            // BoundingRectsImage
             if (ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
             {
                 int width = ImageSource.PixelWidth;
                 int height = ImageSource.PixelHeight;
-                BoundingRectsImage = ocrEngine.CreatBoundingRectImage(width,height,97);
+                BoundingRectsImage = ocrEngine.CreatBoundingRectImage(width, height, 97);
             }
 
             SetButtonsEnabled();

@@ -49,6 +49,7 @@
                 </Image.RenderTransform>
             </Image>
             <Image x:Name="boundingImage" Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
+            <Image x:Name="ocrResultImage" Source="{Binding OcrResutImage, Mode=OneWay}" Margin="10"/>
             <Image x:Name="scrapingImage" MouseLeftButtonDown="scrapingImage_MouseLeftButtonDown"
                 Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
 

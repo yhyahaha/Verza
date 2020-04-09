@@ -107,6 +107,16 @@ namespace ViewModelControlers
             }
         }
 
+        public BitmapSource OcrResutImage
+        {
+            get { return this.ocrResultImage; }
+            private set
+            {
+                this.ocrResultImage = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string OcrLanguage
         {
             get { return ocrLanguage; }
@@ -282,6 +292,7 @@ namespace ViewModelControlers
         private double imageAngle;
         private BitmapSource scrapingRectsImage;
         private BitmapSource boundingRectsImage;
+        private BitmapSource ocrResultImage;
         private string ocrLanguage;
         private double ocrParam;
         private List<double> ocrParamList;

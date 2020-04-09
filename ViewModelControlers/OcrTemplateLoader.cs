@@ -13,6 +13,7 @@ namespace ViewModelControlers
     class OcrTemplateLoader
     {
         int deviceDpi;
+        WriteableBitmap ocrResultImage;
 
         /// <summary>
         /// デバイスのDpiを指定して初期化
@@ -64,9 +65,31 @@ namespace ViewModelControlers
                     }
                 }
             }
-
             return bmp;
         }
+
+        public WriteableBitmap CreateOcrResultImage(int imageWidth, int imageHeight, int deviceDpi)
+        {
+            ocrResultImage = new WriteableBitmap(imageWidth, imageHeight, deviceDpi, deviceDpi, PixelFormats.Pbgra32, null);
+            return ocrResultImage;
+        }
+
+        public void DrawResultRectOnOcrResultImage(int left, int top, int width, int height)
+        {
+            if (ocrResultImage == null) return;
+
+            Int32Rect rect = new Int32Rect(0, 0, width, height);
+            byte[] pixels = GetFilledRectPixels(width, height, 0, 255, 0, 10);  // 半透明グリーン
+            int stride = width * 4;
+
+            ocrResultImage.WritePixels(rect, pixels, stride, left, top);
+        }
+
+        public WriteableBitmap GetOcrResultImage()
+        {
+            return ocrResultImage ?? null;
+        }
+
 
         private byte[] GetRectPixels(int width, int height, int thickness)
         {
@@ -133,6 +156,22 @@ namespace ViewModelControlers
                 }
             }
 
+            return pixels;
+        }
+
+        private byte[] GetFilledRectPixels(int width, int height, byte blue, byte green, byte red, byte alpha)
+        {
+            // 描画用byte[]
+            int pixelsSize = width * height * 4;
+            byte[] pixels = new byte[pixelsSize];
+
+            for (int x = 0; x < pixelsSize; x = x + 4)
+            {
+                pixels[x] = blue;           // Blue
+                pixels[x + 1] = green;      // Green
+                pixels[x + 2] = red;        // Red
+                pixels[x + 3] = alpha;      // Alpha
+            }
             return pixels;
         }
 

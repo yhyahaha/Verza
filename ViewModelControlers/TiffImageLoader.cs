@@ -67,7 +67,6 @@ namespace ViewModelControlers
             }
         }
 
-
         public void RotateTiffImage(string filePath, double rotation)
         {
             BitmapFrame transformed;
@@ -99,7 +98,6 @@ namespace ViewModelControlers
                 tiffEncoder.Save(fileStream);
             }
         }
-
 
         public BitmapFrame CreateBitmapSourceFromPath(string filePath, double decodeRate)
         {

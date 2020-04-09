@@ -43,11 +43,13 @@ namespace UI
         private void checkBoxScrapingRects_Checked(object sender, RoutedEventArgs e)
         {
             this.scrapingImage.Visibility = Visibility.Visible;
+            this.ocrResultImage.Visibility = Visibility.Visible;
         }
 
         private void checkBoxScrapingRects_Unchecked(object sender, RoutedEventArgs e)
         {
             this.scrapingImage.Visibility = Visibility.Collapsed;
+            this.ocrResultImage.Visibility = Visibility.Collapsed;
         }
 
         private void checkBoxBoundingRects_Checked(object sender, RoutedEventArgs e)
