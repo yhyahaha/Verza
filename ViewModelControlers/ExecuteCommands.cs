@@ -118,6 +118,19 @@ namespace ViewModelControlers
 
         private bool CanExecuteGoOcrCommand() => this.imageSource != null && ocrEngine.CanExecute;
 
+        private void ExecuteClearOcrCommand()
+        {
+            foreach(var rect in Items[imageIndex].ScrapingRects)
+            {
+                rect.Value = "";
+            }
+            ClearImages();
+            ShowImageWithScrapingRects();
+            SetButtonsEnabled();
+        }
+
+        private bool CanExecuteClearOcrCommand() => this.imageSource != null && ocrEngine.HasResults;
+
         private void ExecuteRotateRightCommond()
         {
             RotateImage(90.0);
@@ -220,7 +233,7 @@ namespace ViewModelControlers
 
                     tempLoader.DrawResultRectOnOcrResultImage(rectLeft, rectTop, rectWidth, rectHeight);
                 }
-                this.OcrResutImage = tempLoader.GetOcrResultImage();
+                this.OcrResultImage = tempLoader.GetOcrResultImage();
             }
 
             // BoundingRectsImage
@@ -238,6 +251,7 @@ namespace ViewModelControlers
         {
             ImageSource = null;
             ScrapingRectsImage = null;
+            OcrResultImage = null;
             BoundingRectsImage = null;
             ocrEngine.ClearResults();
         }
@@ -275,6 +289,7 @@ namespace ViewModelControlers
             RotateRightCommond?.RaiseCanExecuteChanged();
             DeleteFileCommand?.RaiseCanExecuteChanged();
             goOcrCommand?.RaiseCanExecuteChanged();
+            clearOcrCommand?.RaiseCanExecuteChanged();
         }
 
         public void ReOcrScrapingRectByPosition(int positionX, int positionY)
@@ -282,11 +297,7 @@ namespace ViewModelControlers
             var rectId = Items[imageIndex].ScrapingRects
                 .Where(x => x.Left <= positionX && positionX <= x.Left + x.Width &&
                             x.Top <= positionY && positionY <= x.Top + x.Height).Select(x => x.Id).FirstOrDefault();
-            if (rectId > 0)
-            {
                 Message = rectId.ToString();
-            }
-
         }
 
         // Message

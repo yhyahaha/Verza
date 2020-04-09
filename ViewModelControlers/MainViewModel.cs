@@ -107,7 +107,7 @@ namespace ViewModelControlers
             }
         }
 
-        public BitmapSource OcrResutImage
+        public BitmapSource OcrResultImage
         {
             get { return this.ocrResultImage; }
             private set
@@ -230,6 +230,18 @@ namespace ViewModelControlers
             }
         }
 
+        public IDelegateCommand ClearOcrCommand
+        {
+            get
+            {
+                if(clearOcrCommand == null)
+                {
+                    clearOcrCommand = new DelegateCommand(ExecuteClearOcrCommand, CanExecuteClearOcrCommand);
+                }
+                return clearOcrCommand;
+            }
+        }
+
         public IDelegateCommand RotateRightCommond
         {
             get
@@ -302,6 +314,7 @@ namespace ViewModelControlers
         private IDelegateCommand nextImageCommand;
         private IDelegateCommand previousImageCommand;
         private IDelegateCommand goOcrCommand;
+        private IDelegateCommand clearOcrCommand;
         private IDelegateCommand rotateRightCommond;
         private IDelegateCommand rotateLeftCommond;
         private IDelegateCommand clearFileListCommand;

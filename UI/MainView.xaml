@@ -49,7 +49,7 @@
                 </Image.RenderTransform>
             </Image>
             <Image x:Name="boundingImage" Source="{Binding BoundingRectsImage, Mode=OneWay}" Margin="10"/>
-            <Image x:Name="ocrResultImage" Source="{Binding OcrResutImage, Mode=OneWay}" Margin="10"/>
+            <Image x:Name="ocrResultImage" Source="{Binding OcrResultImage, Mode=OneWay}" Margin="10"/>
             <Image x:Name="scrapingImage" MouseLeftButtonDown="scrapingImage_MouseLeftButtonDown"
                 Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
 
@@ -132,18 +132,21 @@
                     <ComboBox Name="comboBoxOcrParam" Grid.Column="1" 
                               ItemsSource="{ Binding OcrParamList, Mode=OneTime }"
                               SelectedValue="{ Binding OcrParam, Mode=TwoWay }"/>
-
                 </Grid>
-                <Button Content="読み取り" Command="{Binding GoOcrCommand}"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="読み取り" Command="{Binding GoOcrCommand}"/>
+                    <Button Content="結果をクリア" Command="{Binding ClearOcrCommand}" Grid.Column="1"/>
+                </Grid>
                 <Button Content="一括読み取り" IsEnabled="False"/>
 
                 <Label Content="3. ASへ入力"/>
                 <Button Name="buttonGridChange" Content="入力画面を開く"/>
                 
-                <!--開発用-->
-                <ScrollViewer>
-                    <TextBlock Name="textblockResuts"/>
-                </ScrollViewer>
             </StackPanel>
 
             <Grid Grid.Row="1">

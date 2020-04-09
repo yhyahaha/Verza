@@ -41,6 +41,8 @@ namespace Interfaces
 
         IDelegateCommand GoOcrCommand { get; }
 
+        IDelegateCommand ClearOcrCommand { get; }
+
         IDelegateCommand RotateRightCommond { get; }
 
         IDelegateCommand RotateLeftCommond { get; }
