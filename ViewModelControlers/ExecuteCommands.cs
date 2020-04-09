@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ViewModel;
@@ -292,12 +293,46 @@ namespace ViewModelControlers
             clearOcrCommand?.RaiseCanExecuteChanged();
         }
 
-        public void ReOcrScrapingRectByPosition(int positionX, int positionY)
+        public async void ReOcrScrapingRectByPosition(int positionX, int positionY)
         {
-            var rectId = Items[imageIndex].ScrapingRects
+            var target = Items[imageIndex].ScrapingRects
                 .Where(x => x.Left <= positionX && positionX <= x.Left + x.Width &&
-                            x.Top <= positionY && positionY <= x.Top + x.Height).Select(x => x.Id).FirstOrDefault();
-                Message = rectId.ToString();
+                            x.Top <= positionY && positionY <= x.Top + x.Height).FirstOrDefault();
+
+            if (target == null) return;
+
+            int X = (int)(target.Left * OcrParam);
+            int Y = (int)(target.Top * OcrParam);
+            int width = (int)(target.Width * OcrParam);
+            int height = (int)(target.Height * OcrParam);
+            Int32Rect rect = new Int32Rect(X, Y, width, height);
+
+            BitmapSource bmpSource = this.ImageSource;
+            CroppedBitmap cropped = new CroppedBitmap(bmpSource, rect);
+
+            BitmapFrame frame = BitmapFrame.Create(cropped);
+
+            ocrEngine.ClearResults();
+            await ocrEngine.RecognizeAsync(frame).ConfigureAwait(true);
+
+            if (ocrEngine.HasResults)
+            {
+                Message = ocrEngine.OcrResults[0].Words;
+            }
+
+            
+
+
+
+            // recognazeAsync
+
+
+            // 
+
+
+               
+
+
         }
 
         // Message
