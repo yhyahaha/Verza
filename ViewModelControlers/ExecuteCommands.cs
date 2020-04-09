@@ -77,11 +77,6 @@ namespace ViewModelControlers
 
         private async void ExecuteGoOcrCommand()
         {
-            // Items.ScrapingRects
-            Items[imageIndex].ScrapingRects.Clear();
-            string templatePath = Path.Combine("Templates", ocrTemplate);
-            Items[imageIndex].ReadTemplate(templatePath);
-
             // OCR実行
             ocrEngine.ClearResults();
             await ocrEngine.RecognizeAsync(this.ImageSource).ConfigureAwait(true);
@@ -200,6 +195,12 @@ namespace ViewModelControlers
             int lineThickness = 3;
             ScrapingRectsImage = tempLoader.GetImageFromTemplate(templatePath,lineThickness);
 
+            // ImageFileWithOcrResult ScrapingRects の準備
+            if (!Items[imageIndex].ScrapingRects.Any())
+            {
+                Items[imageIndex].ReadScrapingRectsFromTemplate(templatePath);
+            }
+
             // ResultRects
             var scrapingRects = Items[imageIndex].ScrapingRects;
             if (scrapingRects.Any() && ocrEngine.OcrResults.Count > 0 && scrapingRectsImage != null)
@@ -219,9 +220,7 @@ namespace ViewModelControlers
 
                     tempLoader.DrawResultRectOnOcrResultImage(rectLeft, rectTop, rectWidth, rectHeight);
                 }
-
                 this.OcrResutImage = tempLoader.GetOcrResultImage();
-
             }
 
             // BoundingRectsImage
@@ -278,9 +277,16 @@ namespace ViewModelControlers
             goOcrCommand?.RaiseCanExecuteChanged();
         }
 
-        public void ReOcrScrapingRectById(int scrapingRectId)
+        public void ReOcrScrapingRectByPosition(int positionX, int positionY)
         {
-            Message = scrapingRectId.ToString();
+            var rectId = Items[imageIndex].ScrapingRects
+                .Where(x => x.Left <= positionX && positionX <= x.Left + x.Width &&
+                            x.Top <= positionY && positionY <= x.Top + x.Height).Select(x => x.Id).FirstOrDefault();
+            if (rectId > 0)
+            {
+                Message = rectId.ToString();
+            }
+
         }
 
         // Message

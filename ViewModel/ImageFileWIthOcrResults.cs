@@ -45,7 +45,7 @@ namespace ViewModel
             get { return scrapingRects; }
         }
 
-        public void ReadTemplate(string templatePath)
+        public void ReadScrapingRectsFromTemplate(string templatePath)
         {
             List<ScrapingRect> rects = new List<ScrapingRect>();
 

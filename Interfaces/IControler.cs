@@ -50,6 +50,6 @@ namespace Interfaces
         IDelegateCommand DeleteFileCommand { get; }
 
         // Public Method
-        void ReOcrScrapingRectById(int scrapingRectId);
+        void ReOcrScrapingRectByPosition(int positionX, int positionY);
     }
 }

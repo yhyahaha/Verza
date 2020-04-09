@@ -36,7 +36,14 @@ namespace UI
         {
             if (e.ClickCount >= 2)
             {
-                (this.DataContext as IControler).ReOcrScrapingRectById(1);
+                var point = e.GetPosition(this.scrapingImage);
+                var imageWidth = (this.scrapingImage.Source as BitmapSource).PixelWidth;
+                var imageHeight = (this.scrapingImage.Source as BitmapSource).PixelHeight;
+
+                int X = (int)(point.X / this.scrapingImage.ActualWidth * imageWidth);
+                int Y = (int)(point.Y / this.scrapingImage.ActualHeight * imageHeight);
+
+                (this.DataContext as IControler).ReOcrScrapingRectByPosition(X,Y);
             }
         }
 
