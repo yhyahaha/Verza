@@ -30,8 +30,8 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" Name="gridImageColumn"  />
-            <ColumnDefinition Width="0.0" Name="gridManipulationColumn"/>
+            <ColumnDefinition Width="0.0" Name="gridImageColumn"  />
+            <ColumnDefinition Width="*" Name="gridManipulationColumn"/>
             <ColumnDefinition Width="240"/>
         </Grid.ColumnDefinitions>
 
@@ -52,13 +52,47 @@
             <Image x:Name="ocrResultImage" Source="{Binding OcrResultImage, Mode=OneWay}" Margin="10"/>
             <Image x:Name="scrapingImage" MouseLeftButtonDown="scrapingImage_MouseLeftButtonDown"
                 Source="{Binding ScrapingRectsImage, Mode=OneWay}" Margin="10"/>
-
         </Grid>
 
         <!--AS転送-->
         <Grid Grid.Column="1">
-            <Border Background="DarkSeaGreen">
-                <Label Content="AS入力" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="社内伝票入力"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                          </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="スタッフ/機材"/>
+                        <TextBlock Grid.Row="1" Text="作業部門"/>
+                        <TextBlock Grid.Row="2" Text="広告主"/>
+
+                        <TextBox x:Name="CAT" Grid.Row="0" Grid.Column="1" Background="Azure"/>
+                        <TextBox x:Name="DIV" Grid.Row="1" Grid.Column="1" Background="Azure"/>
+                        <TextBox x:Name="SGR" Grid.Row="2" Grid.Column="1" Background="Azure"/>
+                    </Grid>
+
+                    <DataGrid x:Name="dataGrid" Grid.Row="2"/>
+
+
+                    <Button Content="buttons" Grid.Row="3"/>
+                </Grid>
             </Border>
         </Grid>
 

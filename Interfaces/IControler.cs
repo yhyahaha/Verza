@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace Interfaces
 {
-    public interface IControler
+    public interface IControler : IInnerSalesStaff, IInnerSalesEquipment
     {
         // Properties
         string Message { get; }

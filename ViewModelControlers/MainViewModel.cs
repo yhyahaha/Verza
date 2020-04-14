@@ -179,6 +179,74 @@ namespace ViewModelControlers
             get { return this.listOfOcrTemplates; }
         }
 
+        // InnerSalesProperties
+        public string StaffOrEquipment
+        {
+            get { return this.staffOrEquipment; }
+            set
+            {
+                if (value == this.staffOrEquipment) return;
+                this.staffOrEquipment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DivisionCode
+        {
+            get { return this.divisionCode; }
+            set
+            {
+                if (value == this.divisionCode) return;
+                this.divisionCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DivisionName
+        {
+            get { return this.divisionName; }
+            set
+            {
+                if (value == this.divisionName) return;
+                this.divisionName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ProjectCode
+        {
+            get { return this.projectCode; }
+            set
+            {
+                if (value == this.projectCode) return;
+                this.projectCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ClientName
+        {
+            get { return this.clientName; }
+            set
+            {
+                if (value == this.clientName) return;
+                this.clientName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<InnerSalesStaffStatement> Staffs
+        {
+            get { return this.staffs; }
+            set { this.staffs = value; }
+        }
+
+        public List<InnerSalesEquipmentStatement> Equipments
+        {
+            get { return this.equipments; }
+            set { this.equipments = value; }
+        }
+
 
         // DelegateCommands
 
@@ -319,6 +387,14 @@ namespace ViewModelControlers
         private IDelegateCommand rotateLeftCommond;
         private IDelegateCommand clearFileListCommand;
         private IDelegateCommand deleteFileCommand;
+
+        private string staffOrEquipment;
+        private string divisionCode;
+        private string divisionName;
+        private string projectCode;
+        private string clientName;
+        private List<InnerSalesStaffStatement> staffs;
+        private List<InnerSalesEquipmentStatement> equipments;
 
         private IWindowsOCR ocrEngine;
 

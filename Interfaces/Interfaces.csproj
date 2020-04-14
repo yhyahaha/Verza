@@ -44,6 +44,12 @@
   <ItemGroup>
     <Compile Include="IControler.cs" />
     <Compile Include="IDelegateCommand.cs" />
+    <Compile Include="IInnerSalesSlip.cs" />
+    <Compile Include="IInnerSalesStaff.cs" />
+    <Compile Include="IInnerSalesEquipment.cs" />
+    <Compile Include="InnerSalesBase.cs" />
+    <Compile Include="InnerSalesEquipment.cs" />
+    <Compile Include="InnerSalesStaff.cs" />
     <Compile Include="IWindowsOCR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WinOcrResult.cs" />
