@@ -393,8 +393,8 @@ namespace ViewModelControlers
         private string divisionName;
         private string projectCode;
         private string clientName;
-        private List<InnerSalesStaffStatement> staffs;
-        private List<InnerSalesEquipmentStatement> equipments;
+        private List<InnerSalesStaffStatement> staffs = new List<InnerSalesStaffStatement>();
+        private List<InnerSalesEquipmentStatement> equipments = new List<InnerSalesEquipmentStatement>();
 
         private IWindowsOCR ocrEngine;
 

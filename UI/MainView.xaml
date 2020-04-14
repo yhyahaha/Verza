@@ -83,9 +83,12 @@
                         <TextBlock Grid.Row="1" Text="作業部門"/>
                         <TextBlock Grid.Row="2" Text="広告主"/>
 
-                        <TextBox x:Name="CAT" Grid.Row="0" Grid.Column="1" Background="Azure"/>
-                        <TextBox x:Name="DIV" Grid.Row="1" Grid.Column="1" Background="Azure"/>
-                        <TextBox x:Name="SGR" Grid.Row="2" Grid.Column="1" Background="Azure"/>
+                        <TextBox x:Name="CAT" Grid.Row="0" Grid.Column="1" Background="Azure"
+                                 Text="{Binding StaffOrEquipment, Mode=TwoWay}"/>
+                        <TextBox x:Name="DIV" Grid.Row="1" Grid.Column="1" Background="Azure"
+                                 Text="{Binding DivisionCode, Mode=TwoWay}"/>
+                        <TextBox x:Name="SGR" Grid.Row="2" Grid.Column="1" Background="Azure"
+                                 Text="{Binding ProjectCode, Mode=TwoWay}"/>
                     </Grid>
 
                     <DataGrid x:Name="dataGrid" Grid.Row="2"/>

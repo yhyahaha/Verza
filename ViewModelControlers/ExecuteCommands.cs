@@ -116,6 +116,7 @@ namespace ViewModelControlers
             }
 
             ShowImageWithScrapingRects();
+            ApplyResultsToManipulationPanel();
 
             Message = $"{counter}件読み取りました。";
         }
@@ -249,6 +250,26 @@ namespace ViewModelControlers
             }
 
             SetButtonsEnabled();
+        }
+
+        private void ApplyResultsToManipulationPanel()
+        {
+            Staffs.Clear(); 
+            Equipments.Clear();
+
+            StaffOrEquipment = Items[imageIndex].GetValueByName("CAT");
+            DivisionCode = Items[imageIndex].GetValueByName("DIV");
+            ProjectCode = Items[imageIndex].GetValueByName("SGN");
+
+            for(int r = 0; r < 18; r++)
+            {
+                for(int c = 0; c < 3; c++)
+                {
+
+                }
+            }
+
+
         }
 
         private void ClearImages()

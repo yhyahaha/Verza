@@ -81,5 +81,11 @@ namespace ViewModel
             string s = this.scrapingRects[rectId].Value;
             scrapingRects[rectId].Value = "aa";
         }
+
+        public string GetValueByName(string rectName)
+        {
+            if (!scrapingRects.Any()) return string.Empty;
+            return scrapingRects.Where(x => x.Name == rectName).Select(x => x.Value).First();
+        }
     }
 }
